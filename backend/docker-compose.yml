@@ -1,0 +1,37 @@
+version: "3.3"
+services:
+  web:
+    build: .
+    container_name: web
+    hostname: web
+    ports:
+      - "8000:5000"
+    volumes:
+      - .:/app
+    environment:
+      FLASK_DEBUG: "true"
+    tty: true
+    env_file:
+      - .env
+    depends_on:
+      - db
+  
+  redis:
+    image: "redis:alpine"
+  
+  db:
+    image: "postgres:16"
+    container_name: db
+    hostname: db
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=business
+      - POSTGRES_PASSWORD=pw
+      - POSTGRES_DB=business_db
+
+volumes:
+  postgres_data: 
+
