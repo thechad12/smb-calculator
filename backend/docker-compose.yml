@@ -1,9 +1,9 @@
 version: "3.3"
 services:
-  web:
+  backend:
     build: .
-    container_name: web
-    hostname: web
+    container_name: backend
+    hostname: backend
     ports:
       - "8000:5000"
     volumes:
@@ -11,18 +11,17 @@ services:
     environment:
       FLASK_DEBUG: "true"
     tty: true
-    env_file:
-      - .env
     depends_on:
-      - db
+      - database
   
   redis:
+    container_name: redis-business
     image: "redis:alpine"
   
-  db:
+  database:
     image: "postgres:16"
-    container_name: db
-    hostname: db
+    container_name: database
+    hostname: database
     ports:
       - 5432:5432
     volumes:
