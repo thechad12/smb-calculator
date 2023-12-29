@@ -5,3 +5,5 @@ class Business(db.Model):
 
     uid = db.Column(UUID(as_uuid=True), primary_key=True)
     name = db.Column(db.String, nullable=False)
+    location = db.Column(db.String, nullable=True)
+    
