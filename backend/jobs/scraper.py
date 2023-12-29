@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 log_handler = logging.StreamHandler()
 
-async def HTTPClientDownloader(url, settings):
+async def HTTPClientDownloader(url, settings, state):
     host = urlparse(url).hostname
     max_tcp_connections = settings['max_tcp_connections']
 
@@ -23,7 +23,7 @@ async def HTTPClientDownloader(url, settings):
         async with aiohttp.ClientSession(connector=connector) as session:
             start_time = time.perf_counter()  # Start timer
             safari_agents = [
-                'Safari/17612.3.14.1.6 CFNetwork/1327.0.4 Darwin/21.2.0',  # works!
+                'Safari/17612.3.14.1.6 CFNetwork/1327.0.4 Darwin/21.2.0',
             ]
             user_agent = random.choice(safari_agents)
 
@@ -48,27 +48,27 @@ async def HTTPClientDownloader(url, settings):
 
                 dir = "./data"
                 idx = url.split(
-                    "https://www.bizbuysell.com/new-york-businesses-for-sale/")[-1]
-                loc = f"{dir}/bizbuysell-ny-{idx}.html"
+                    f"https://www.bizbuysell.com/{state}-businesses-for-sale/")[-1]
+                loc = f"{dir}/bizbuysell-{state}-{idx}.html"
 
                 async with aiofiles.open(loc, mode="w") as fd:
                     await fd.write(html)
 
 
-async def dispatch(url, settings):
-    await HTTPClientDownloader(url, settings)
+async def dispatch(url, settings, state):
+    await HTTPClientDownloader(url, settings, state)
 
-async def main(start_urls, settings):
+async def main(start_urls, settings, state):
     tasks = []
     for url in start_urls:
-        task = asyncio.create_task(dispatch(url, settings))
+        task = asyncio.create_task(dispatch(url, settings, state))
         tasks.append(task)
 
     results = await asyncio.gather(*tasks)
     print(f"total requests", len(results))
 
 
-async def run_scraper(state):
+async def run_scraper(state, page_limit):
     state = state.lower().replace(' ', '-')
     settings = {
         "max_tcp_connections": 1,
@@ -83,9 +83,9 @@ async def run_scraper(state):
     }
 
     start_urls = []
-    start, end = 1, 13  # demo purpose
+    start, end = 1, page_limit
     for i in range(start, end):
         url = f"https://www.bizbuysell.com/{state}-businesses-for-sale/{i}"
         start_urls.append(url)
 
-    asyncio.run(main(start_urls, settings))
+    asyncio.run(main(start_urls, settings, state))

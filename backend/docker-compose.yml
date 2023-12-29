@@ -13,6 +13,11 @@ services:
     tty: true
     depends_on:
       - database
+
+  jobs:
+    build: .
+    container_name: worker-1
+    hostname: worker-1
   
   redis:
     container_name: redis-business
