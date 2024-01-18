@@ -9,3 +9,9 @@ app.config.from_object("config.Config")
 cors = CORS(app)
 db = SQLAlchemy(app)
 
+
+from database.models.business import Business
+from database.models.metrics import Metrics
+
+target_metadata = [Business, Metrics]
+migrate = Migrate(app, db)
