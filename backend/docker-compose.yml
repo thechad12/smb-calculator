@@ -10,6 +10,8 @@ services:
       - .:/app
     environment:
       FLASK_DEBUG: "true"
+      POSTGRES_PASSWORD: "postgres"
+      DATABASE_URL: "postgresql://postgres:postgres@database:5432"
     tty: true
     depends_on:
       - database
@@ -30,12 +32,12 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - psql_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=business
-      - POSTGRES_PASSWORD=pw
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=business_db
 
 volumes:
-  postgres_data: 
+  psql_data: 
 
