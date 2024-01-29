@@ -1,4 +1,5 @@
 from main import db
+from sqlalchemy.types import ARRAY
 from sqlalchemy.dialects.postgresql import UUID
 
 class Metrics(db.Model):
@@ -12,3 +13,11 @@ class Metrics(db.Model):
     ask_price = db.Column(db.Float, nullable=False)
     gross_revenue = db.Column(db.Float, nullable=True)
     ebitda = db.Column(db.Float, nullable=True)
+    valuation = db.Column(db.Float)
+    revenue = db.Column(db.Float)
+    sector = db.Column(db.String)
+    geography = db.Column(db.String)
+    scale = db.Column(db.Float)
+    advantages = db.Column(ARRAY(db.String))
+    investor = db.Column(db.Boolean)
+    multiple = db.Column(db.Float)

@@ -12,6 +12,7 @@ db = SQLAlchemy(app)
 
 from database.models.business import Business
 from database.models.metrics import Metrics
+from database.models.deal_box import DealBox
 
-target_metadata = [Business, Metrics]
+target_metadata = [Business, Metrics, DealBox]
 migrate = Migrate(app, db)

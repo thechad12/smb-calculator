@@ -1,10 +1,11 @@
 from main import db
-from sqlachemy.types import ARRAY
+from sqlalchemy.types import ARRAY
 from sqlalchemy.dialects.postgresql import UUID
 
 class DealBox(db.Model):
 
     uid = db.Column(UUID(as_uuid=True), primary_key=True)
+    name = db.Column(db.String, nullable=False)
     valuation_low = db.Column(db.Float)
     valuation_high = db.Column(db.Float)
     revenue_low = db.Column(db.Float)
