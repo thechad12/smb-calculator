@@ -7,4 +7,5 @@ class Business(db.Model):
     name = db.Column(db.String, nullable=False)
     location = db.Column(db.String, nullable=True)
     description = db.Column(db.Text, nullable=True)
+    biz_type = db.Column(db.Text, nullable=True)
     
