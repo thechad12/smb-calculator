@@ -21,3 +21,7 @@ class DealBox(db.Model):
     investor = db.Column(db.Boolean)
     multiple_low = db.Column(db.Float)
     multiple_high = db.Column(db.Float)
+
+    @property
+    def as_dict(self):
+        return self.__dict__

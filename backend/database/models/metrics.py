@@ -21,3 +21,8 @@ class Metrics(db.Model):
     advantages = db.Column(ARRAY(db.String))
     investor = db.Column(db.Boolean)
     multiple = db.Column(db.Float)
+
+
+    @property
+    def as_dict(self):
+        return self.__dict__
