@@ -1,0 +1,15 @@
+import json
+import calculations.calc as calc
+from flask import Blueprint
+from utils import get_params
+
+
+bp = Blueprint('data', __name__)
+
+
+@bp.route('/comp_deal_box')
+def comp_deal_box():
+    params = get_params()
+    deal_box_name = params.get('deal_box')
+    data = calc.deal_boxes(deal_box_name)
+    return json.dumps(data)

@@ -3,8 +3,9 @@ from database.models.business import Business
 from database.models.deal_box import DealBox
 import uuid
 
-
 from main import db
+from collections import defaultdict
+
 
 def _get_biz_metrics(uid) -> dict:
     result = db.session.query(Metrics).filter_by(
@@ -46,5 +47,16 @@ def comp_to_deal_box(
         'deal_box': box,
         biz_name: metrics,
     }
+    return data
+
+
+def deal_boxes(box_name: str) -> dict:
+    businesses = db.session.query(Business).all()
+    deal_box = _get_deal_box_by_name(box_name)
+    data = defaultdict()
+    data['deal_box'] = deal_box
+    for biz in businesses:
+        metrics = _get_biz_metrics(biz.uid)
+        data[biz.name] = metrics
     return data
 
