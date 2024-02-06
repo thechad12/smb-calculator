@@ -16,3 +16,9 @@ from database.models.deal_box import DealBox
 
 target_metadata = [Business, Metrics, DealBox]
 migrate = Migrate(app, db)
+
+from routes.data import bp
+from routes.actions import actions
+
+app.register_blueprint(bp)
+app.register_blueprint(actions)
