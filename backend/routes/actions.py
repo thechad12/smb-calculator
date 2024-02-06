@@ -11,9 +11,15 @@ actions = Blueprint('actions', __name__)
 @actions.route('/add_business', methods=['POST'])
 def add_business():
     data = request.get_json()
+    required_fields = (
+        'name', 
+        'location', 
+        'description', 
+        'biz_type'
+    )
 
     # Validate the incoming data
-    if not all(key in data for key in ('name', 'location', 'description', 'biz_type')):
+    if not all(key in data for key in required_fields):
         return jsonify({'error': 'Missing required fields'}), 400
 
     new_business = Business(**data)
@@ -26,9 +32,16 @@ def add_business():
 @actions.route('/add_deal_box', methods=['POST'])
 def add_deal_box():
     data = request.get_json()
+    required_fields = (
+        'name', 
+        'valuation_low', 
+        'valuation_high', 
+        'revenue_low', 
+        'revenue_high'
+    )
 
     # Validate the incoming data
-    if not all(key in data for key in ('name', 'valuation_low', 'valuation_high', 'revenue_low', 'revenue_high')):
+    if not all(key in data for key in required_fields):
         return jsonify({'error': 'Missing required fields'}), 400
 
     new_deal_box = DealBox(**data)
@@ -41,9 +54,23 @@ def add_deal_box():
 @actions.route('/add_business_metrics', methods=['POST'])
 def add_business_metrics():
     data = request.get_json()
+    required_fields = (
+        'business_uid', 
+        'cashflow', 
+        'ask_price', 
+        'gross_revenue', 
+        'valuation', 
+        'revenue', 
+        'sector', 
+        'geography', 
+        'scale', 
+        'advantages', 
+        'investor', 
+        'multiple'
+    )
 
     # Validate the incoming data
-    if not all(key in data for key in ('business_uid', 'cashflow', 'ask_price', 'gross_revenue', 'ebitda', 'valuation', 'revenue', 'sector', 'geography', 'scale', 'advantages', 'investor', 'multiple')):
+    if not all(key in data for key in required_fields):
         return jsonify({'error': 'Missing required fields'}), 400
 
 
