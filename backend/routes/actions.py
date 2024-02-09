@@ -55,7 +55,7 @@ def add_deal_box():
 def add_business_metrics():
     data = request.get_json()
     required_fields = (
-        'business_uid', 
+        'business_name', 
         'cashflow', 
         'ask_price', 
         'gross_revenue', 
@@ -68,7 +68,11 @@ def add_business_metrics():
         'investor', 
         'multiple'
     )
-
+    business = db.session.query(Business).filter_by(
+        Business.name == data.business_name).first()
+    if not business:
+        return jsonify({'error': 'Business does not exist'}), 400
+    data['business_uid'] = business.uid
     # Validate the incoming data
     if not all(key in data for key in required_fields):
         return jsonify({'error': 'Missing required fields'}), 400
