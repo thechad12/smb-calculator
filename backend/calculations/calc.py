@@ -55,8 +55,10 @@ def deal_boxes(box_name: str) -> dict:
     deal_box = _get_deal_box_by_name(box_name)
     data = defaultdict()
     data['deal_box'] = deal_box
+    data['deal_box']['is_deal_box'] = True
     for biz in businesses:
         metrics = _get_biz_metrics(biz.uid)
         data[biz.name] = metrics
+        data[biz.name]['business_name'] = biz.name
     return data
 
