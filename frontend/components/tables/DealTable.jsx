@@ -2,7 +2,6 @@ import {
     Table,
     Thead,
     Tbody,
-    Tfoot,
     Tr,
     Th,
     Td,
@@ -42,6 +41,8 @@ const DealTable = props => {
     }
 
     if (error || fetchError) {
+        console.log(error);
+        console.log(fetchError);
         return (
             <>
                 <Alert status='warning'>

@@ -25,6 +25,18 @@ const router = createBrowserRouter(
             <DealTable />
         )
     },
+    {
+        path: "/new-deal-box",
+        element: (
+            <DealTable />
+        )
+    },
+    {
+        path: "/new-business",
+        element: (
+            <DealTable />
+        )
+    },
 )
 
 const App = () => {
