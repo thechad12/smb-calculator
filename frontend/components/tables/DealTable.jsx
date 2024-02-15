@@ -21,6 +21,20 @@ const DealTable = props => {
 
     const { isLoading, error, data, fetchError } = GetData('data/comp_deal_box');
 
+    const metrics = [
+        'Cashflow',
+        'Ask Price',
+        'Gross Revenue',
+        'Valuation',
+        'Revenue',
+        'Sector',
+        'Geography',
+        'Scale',
+        'Advantages',
+        'Investor or Operator',
+        'Multiple',
+    ];
+
     if (isLoading && !data) {
         return (
             <Spinner size='xl' />
@@ -58,32 +72,52 @@ const DealTable = props => {
                     <TableCaption>Current Employee List</TableCaption>
                     <Thead>
                         <Tr>
+                            <Th>Metrics</Th>
+                            <Th>Deal Box</Th>
                             {data.map((item) => {
                                 <Th>{item.biz_name}</Th>
                             })}
                         </Tr>
                         </Thead>
                         <Tbody>
+                            {metrics.map( metric => {
+                                return (
+                                    <Tr>
+                                        <Td>{metric}</Td>
+                                    </Tr>
+                                )
+                            })}
                             {data.map((item) => {
                                 if (!item.is_deal_box) {
                                     return (
                                         <Tr>
-                                            <Td>{item.deal_box}</Td>
-                                            <Td>{item.email}</Td>
-                                            <Td>{item.department}</Td>
-                                            <Td>{item.job_level}</Td>
-                                            <Td>{item.manager}</Td>
-                                            <Td>{item.worker_type}</Td>
-                                            <Td>{item.employee_type}</Td>
-                                            <Td>{item.hire_date}</Td>
-                                            <Td>{item.bp_type}</Td>
-                                            <Td>{item.termination_date}</Td>
-                                            <Td>
-                                                <Button 
-                                                    colorScheme='blackAlpha'>
-                                                        Expire Blackout
-                                                </Button>
-                                            </Td>
+                                            <Td>{item.cashflow}</Td>
+                                            <Td>{item.ask_price}</Td>
+                                            <Td>{item.gross_revenue}</Td>
+                                            <Td>{item.valuation}</Td>
+                                            <Td>{item.revenue}</Td>
+                                            <Td>{item.sector}</Td>
+                                            <Td>{item.geography}</Td>
+                                            <Td>{item.scale}</Td>
+                                            <Td>{item.advantages}</Td>
+                                            <Td>{item.investor}</Td>
+                                            <Td>{item.multiple}</Td>
+                                        </Tr>
+                                    )
+                                } else {
+                                    return (
+                                        <Tr>
+                                            <Td>{item.cashflow}</Td>
+                                            <Td>{item.ask_price}</Td>
+                                            <Td>{item.revenue}</Td>
+                                            <Td>{item.valuation}</Td>
+                                            <Td>{item.profit}</Td>
+                                            <Td>{item.sector}</Td>
+                                            <Td>{item.geography}</Td>
+                                            <Td>{item.scale}</Td>
+                                            <Td>{item.advantages}</Td>
+                                            <Td>{item.investor}</Td>
+                                            <Td>{item.multiple}</Td>
                                         </Tr>
                                     )
                                 }
@@ -94,3 +128,5 @@ const DealTable = props => {
         </>
     )
 }
+
+export default DealTable;

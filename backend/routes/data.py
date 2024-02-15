@@ -1,7 +1,7 @@
 import json
 import calculations.calc as calc
 from flask import Blueprint
-from utils import get_params
+from routes.utils import get_params
 
 
 bp = Blueprint('data', __name__)

@@ -8,6 +8,10 @@ class DealBox(db.Model):
     name = db.Column(db.String, nullable=False)
     valuation_low = db.Column(db.Float)
     valuation_high = db.Column(db.Float)
+    cashflow_low = db.Column(db.Float)
+    cashflow_high = db.Column(db.Float)
+    ask_price_low = db.Column(db.Float)
+    ask_price_high = db.Column(db.Float)
     revenue_low = db.Column(db.Float)
     revenue_high = db.Column(db.Float)
     profit_low = db.Column(db.Float)
@@ -25,3 +29,21 @@ class DealBox(db.Model):
     @property
     def as_dict(self):
         return self.__dict__
+    
+
+    @property
+    def serialize(self):
+        return {
+            'name': self.name,
+            'cashflow': f'{str(self.cashflow_low)} - {str(self.cashflow_high)}',
+            'valuation': f'{str(self.valuation_low)} - {str(self.valuation_high)}',
+            'ask_price': f'{str(self.ask_price_low)} - {str(self.ask_price_high)}',
+            'revenue': f'{str(self.revenue_low)} - {str(self.revenue_high)}',
+            'profit': f'{str(self.profit_low)} - {str(self.profit_high)}',
+            'sector': self.sector,
+            'investor': self.investor,
+            'geography': list(self.geography),
+            'scale': self.scale,
+            'advantages': list(self.advantages),
+            'multiple': f'{str(self.multiple_low)} - {str(self.multiple_high)}',
+        }

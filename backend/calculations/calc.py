@@ -23,7 +23,7 @@ def _get_deal_box_by_name(str_name) -> dict:
         DealBox.name == str_name
     ).first()
     if result is not None:
-        return result.as_dict
+        return result.serialize
     return {
         'results': 0
     }
@@ -59,6 +59,7 @@ def deal_boxes(box_name: str) -> dict:
     for biz in businesses:
         metrics = _get_biz_metrics(biz.uid)
         data[biz.name] = metrics
+        data[biz.name]['is_deal_box'] = False
         data[biz.name]['business_name'] = biz.name
     return data
 
