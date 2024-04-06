@@ -1,5 +1,4 @@
 import Main from './components/Main';
-import DealTable from './components/tables/DealTable';
 import { ChakraProvider } from '@chakra-ui/react'
 import {
   QueryClient,
@@ -32,13 +31,19 @@ const router = createBrowserRouter(
     {
         path: "/new-deal-box",
         element: (
-            <DealTable />
+            <NewDealBox />
         )
     },
     {
         path: "/new-business",
         element: (
-            <DealTable />
+            <NewBusiness />
+        )
+    },
+    {
+        path: "/new-metrics",
+        element: (
+            <NewMetrics />
         )
     },
 )

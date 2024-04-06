@@ -11,7 +11,10 @@ const Main = props => {
                 Create a deal box
             </ChakraLink>
             <ChakraLink as={ReactRouterLink} to='/new-business'>
-                Create a business and metrics
+                Create a business
+            </ChakraLink>
+            <ChakraLink as={ReactRouterLink} to='/new-metrics'>
+                Attach Metrics to a Business
             </ChakraLink>
             <ChakraLink as={ReactRouterLink} to='/deal-table'>
                 Deal Box

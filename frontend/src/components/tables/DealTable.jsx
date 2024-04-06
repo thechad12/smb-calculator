@@ -13,7 +13,7 @@ import {
     AlertTitle,
     AlertDescription,
   } from '@chakra-ui/react'
-  import { GetData } from '../../utils/api';
+  import { GetData } from '../../../utils/api';
 
 
 const DealTable = props => {
