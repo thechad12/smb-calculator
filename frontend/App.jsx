@@ -11,6 +11,10 @@ import {
     Route,
     Link,
 } from 'react-router-dom';
+import DealTable from './components/tables/DealTable';
+import NewDealBox from './components/forms/NewDealBox';
+import NewMetrics from './components/forms/NewMetrics';
+import NewBusiness from './components/forms/NewBusiness';
 
 const router = createBrowserRouter(
     {
