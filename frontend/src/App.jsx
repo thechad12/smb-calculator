@@ -15,7 +15,7 @@ import NewDealBox from './components/forms/NewDealBox';
 import NewMetrics from './components/forms/NewMetrics';
 import NewBusiness from './components/forms/NewBusiness';
 
-const router = createBrowserRouter(
+const router = createBrowserRouter([
     {
         path: "/",
         element: (
@@ -46,7 +46,7 @@ const router = createBrowserRouter(
             <NewMetrics />
         )
     },
-)
+]);
 
 const App = () => {
   const queryClient = new QueryClient();
