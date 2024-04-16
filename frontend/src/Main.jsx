@@ -10,7 +10,12 @@ const Main = props => {
 
     return (
         <>
-            <HStack spacing={2}>
+            <HStack 
+                spacing={2} 
+                ml='auto' 
+                mr='auto'
+                mt='auto'
+                position='absolute'>
                 <ChakraLink as={ReactRouterLink} to='/new-deal-box'>
                     Create a deal box
                 </ChakraLink>

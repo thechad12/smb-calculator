@@ -5,6 +5,7 @@ const theme = extendTheme({
         global: {
             body: {
                 fontFamily: 'roboto',
+                bg: '#242582',
             }
         }
     },
@@ -13,7 +14,10 @@ const theme = extendTheme({
             baseStyle: {
                 fontWeight: 'bold',
                 textDecoration: 'none',
+                color: 'gray.50'
             }
         }
     }
 });
+
+export default theme;

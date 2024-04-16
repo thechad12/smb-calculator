@@ -1,4 +1,5 @@
 import Main from './Main';
+import theme from './theme';
 import { ChakraProvider } from '@chakra-ui/react'
 import {
   QueryClient,
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
 const App = () => {
   const queryClient = new QueryClient();
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
             <RouterProvider router={router} />
         </QueryClientProvider>
