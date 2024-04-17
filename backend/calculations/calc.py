@@ -29,6 +29,13 @@ def _get_deal_box_by_name(str_name) -> dict:
     }
 
 
+def get_business_metrics(business_uid: str) -> dict:
+    converted = uuid.UUID(business_uid)
+    metrics = _get_biz_metrics(converted)
+    return metrics
+
+
+
 def get_all_businesses() -> list:
     results = db.session.query(Business).all()
     return [result.serialize for result in results]
