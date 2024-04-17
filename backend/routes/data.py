@@ -13,3 +13,10 @@ def comp_deal_box():
     deal_box_name = params.get('deal_box')
     data = calc.deal_boxes(deal_box_name)
     return json.dumps(data)
+
+
+@bp.route('/get_businesses')
+def get_businesses():
+    params = get_params()
+    data = calc.get_all_businesses()
+    return json.dumps(data)

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useMutation, useQuery } from 'react-query';
+import { useTable } from 'react-table';
 import { 
     FormControl, 
     FormLabel, 
@@ -10,7 +11,7 @@ import {
     Button 
 } from "@chakra-ui/react";
 
-const API_BASE_URL = 'http://localhost:8000/actions';
+const API_BASE_URL = 'http://localhost:8000/';
 
 function NewMetrics() {
   const [businesses, setBusinesses] = useState([]);
@@ -32,17 +33,22 @@ function NewMetrics() {
   });
 
   const fetchBusinesses = async () => {
-    const response = await fetch(`${API_BASE_URL}/get_businesses`);
+    const response = await fetch(`${API_BASE_URL}data/get_businesses`);
     const data = await response.json();
     setBusinesses(data);
   };
+
+  const fetchBusinessMetrics = async () => {
+    const response = await fetch(`${API_BASE_URL}data/get_business_metrics/${selectedBusiness}`);
+    const data = await response.json();
+  }
 
   useEffect(() => {
     fetchBusinesses();
   }, []);
 
   const createMetrics = async (data) => {
-    const response = await fetch(`${API_BASE_URL}/add_business_metrics`, {
+    const response = await fetch(`${API_BASE_URL}actions/add_business_metrics`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -76,6 +82,7 @@ function NewMetrics() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setSelectedBusiness(value);
     setFormData(prevData => ({
       ...prevData,
       [name]: value
