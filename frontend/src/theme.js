@@ -16,6 +16,12 @@ const theme = extendTheme({
                 textDecoration: 'none',
                 color: 'gray.50'
             }
+        },
+        FormLabel: {
+            baseStyle: {
+                color: 'gray.50',
+                fontWeight: 'bold',
+            }
         }
     }
 });
