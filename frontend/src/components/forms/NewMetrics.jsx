@@ -16,6 +16,19 @@ const API_BASE_URL = 'http://localhost:8000/';
 function NewMetrics() {
   const [businesses, setBusinesses] = useState([]);
   const [selectedBusiness, setSelectedBusiness] = useState('');
+
+  const columns = useMemo(() => [
+    {Header: 'Cashflow', accessor: 'cashflow'},
+    {Header: 'Ask Price', accessor: 'ask_price'},
+    {Header: 'Gross Revenue', accessor: 'gross_revenue'},
+    {Header: 'EBITDA', accessor: 'ebitda'},
+    {Header: 'Valuation', accessor: 'valuation'},
+    {Header: 'Sector', accessor: 'sector'},
+    {Header: 'Geography', accessor: 'geography'},
+    {Header: 'Advantages', accessor: 'advantages'},
+    {Header: 'Multiple', accessor: 'multiple'},
+  ]);
+
   const [formData, setFormData] = useState({
     business_uid: '',
     cashflow: '',
