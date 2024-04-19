@@ -16,6 +16,11 @@ const API_BASE_URL = 'http://localhost:8000/';
 function NewMetrics() {
   const [businesses, setBusinesses] = useState([]);
   const [selectedBusiness, setSelectedBusiness] = useState('');
+  const [editRowId, setEditRowId] = useState(null);
+
+  const handleEditClick = rowId => {
+    setEditRowId(rowId);
+  }
 
   const columns = useMemo(() => [
     {Header: 'Cashflow', accessor: 'cashflow'},
