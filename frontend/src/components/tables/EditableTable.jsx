@@ -5,6 +5,12 @@ const EditableTable = props => {
 
     const columns = useMemo(() => props.columns);
     const data = props.data;
+    const saveEndpoint = props.saveEndpoint;
+    const [validationErrors, setValidationErrors] = useState([]);
+
+    const handleEditClick = rowId => {
+        setEditRowId(rowId);
+    }
 
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
         useTable({ columns, data });

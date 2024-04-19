@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { useTable } from 'react-table';
+import EditableTable from '../tables/EditableTable';
 import { 
     FormControl, 
     FormLabel, 
