@@ -18,10 +18,6 @@ function NewMetrics() {
   const [selectedBusiness, setSelectedBusiness] = useState('');
   const [editRowId, setEditRowId] = useState(null);
 
-  const handleEditClick = rowId => {
-    setEditRowId(rowId);
-  }
-
   const columns = useMemo(() => [
     {Header: 'Cashflow', accessor: 'cashflow'},
     {Header: 'Ask Price', accessor: 'ask_price'},
