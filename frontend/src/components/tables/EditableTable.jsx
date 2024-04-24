@@ -1,20 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { useTable } from 'react-table';
-
-const TableInput = (props) => {
-    const value = props.value;
-    const onChange = props.onChange;
-    const [inputValue, setInputValue] = useState(value);
-
-    const handleInputChange = e => {
-        setInputValue(e.target.value);
-        onChange(e.target.value);
-    };
-
-    return <input
-            value={inputValue}
-            onChange={handleInputChange} />;
-}
+import React, { useState, useMemo } from 'react';
+import Table from 'rowstack';
 
 const EditableTable = props => {
 
@@ -41,46 +26,18 @@ const EditableTable = props => {
     }
 
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        useTable({ columns, data });
+        useTable({ 
+            columns, 
+            data,
+            getCoreRowModel: getCoreRowModel(),
+            meta: {
+                updateData: handleSaveClick,
+            }
+        });
 
     return (
         <div className='table-container'>
-            <table {...getTableProps()}>
-                <thead>
-                    {headerGroups.map((headerGroup) => (
-                            <tr {...headerGroup.getHeaderGroupProps()}>
-                                {headerGroup.headers.map((column) => (
-                                    <th {...column.getHeaderProps()}>
-                                        {column.render('Header')}
-                                    </th>
-                                ))}
-                            </tr>
-                        ))}
-                </thead>
-                <tbody {...getTableBodyProps()}>
-                    {rows.map((row) => {
-                        prepareRow(row);
-                        return (
-                            <tr {...row.getRowProps()}>
-                                {row.cells.map((cell) => {
-                                    return (
-                                        <td {...cell.getCellProps()}>
-                                            {editRowId === row.id ? (
-                                                <TableInput
-                                                    value={cell.value}
-                                                    onChange={(newValue) => {}}
-                                                />
-                                            )
-                                            : (cell.render('Cell'))
-                                            }
-                                        </td>
-                                    );
-                                })}
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+            <Table data={data} columns={columns}/>
         </div>
     )
 }
