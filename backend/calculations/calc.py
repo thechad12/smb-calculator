@@ -75,3 +75,8 @@ def deal_boxes(box_name: str) -> dict:
         data[biz.name]['business_name'] = biz.name
     return data
 
+
+def get_deal_boxes() -> list:
+    deal_boxes = db.session.query(DealBox).all()
+    return [deal_box.serialize for deal_box in deal_boxes]
+

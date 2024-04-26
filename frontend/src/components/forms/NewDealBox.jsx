@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { 
   Button 
@@ -6,8 +6,10 @@ import {
 import EditableTable from '../tables/EditableTable';
 
 const API_BASE_URL = 'http://localhost:8000/actions';
+const DATA_BASE_URL = 'http://localhost:8000/data';
 
 function NewDealBox() {
+  const [data, setData] = useState([]);
 
   const columns = useMemo(() => [
     {name: 'Name', id: 'name'},
@@ -23,6 +25,16 @@ function NewDealBox() {
     {name: 'Investor', id: 'investor'},
     {name: 'Scale', id: 'scale'},
   ]);
+
+  useEffect(() => {
+    fetchDealBoxes();
+  }, []);
+
+  const fetchDealBoxes = async () => {
+    const response = await fetch(`${DATA_BASE_URL}/get_deal_boxes`);
+    const data = await response.json();
+    setData(data);
+  }
 
   const createDealBox = async (data) => {
     // Adjust list-type fields
@@ -61,7 +73,9 @@ function NewDealBox() {
 
   return (
     <EditableTable 
-      columns={columns}/>
+      columns={columns}
+      endpoint={createDealBoxMutation}
+      data={data} />
   );
 }
 
