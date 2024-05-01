@@ -22,7 +22,7 @@ def get_businesses():
     return json.dumps(data)
 
 
-@bp.route('/get_business_metrics/<string:business_uid')
+@bp.route('/get_business_metrics/<string:business_uid>')
 def get_business_metrics(business_uid):
     data = calc.get_bussiness_metrics(business_uid)
     return json.dumps(data)
