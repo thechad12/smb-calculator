@@ -2,7 +2,9 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import EditableTable from '../tables/EditableTable';
 import { 
-    Button 
+    Button,
+    Alert,
+    AlertIcon,
 } from "@chakra-ui/react";
 
 const API_BASE_URL = 'http://localhost:8000/';
@@ -11,6 +13,7 @@ function NewMetrics() {
   const [businesses, setBusinesses] = useState([]);
   const [selectedBusiness, setSelectedBusiness] = useState('');
   const [metricData, setMetricData] = useState([]);
+  const [success, setSuccess] = useState(false);
 
   const columns = useMemo(() => [
     {name: 'Cashflow', id: 'cashflow'},
@@ -55,17 +58,23 @@ function NewMetrics() {
 
   const { mutate: createMetricsMutation, isLoading: isCreatingMetrics } = useMutation(createMetrics, {
     onSuccess: () => {
-      alert('Metrics added successfully');
+      setSuccess(true);
     }
   });
 
 
   return (
     <>
-      <Button onClick={createMetricsMutation}>Save New Metrics</Button>
+      {success && (
+          <Alert status='success'>
+            <AlertIcon />
+            Metrics uploaded to the server. Fire on!
+          </Alert>
+      )}
       <EditableTable 
         columns={columns}
-        data={metricData} />
+        data={metricData}
+        endpoint={createMetricsMutation} />
     </>
   );
 }

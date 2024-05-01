@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { useMutation } from 'react-query';
+import {
+  Alert,
+  AlertIcon,
+} from '@chakra-ui/react';
 import EditableTable from '../tables/EditableTable';
 
 const API_BASE_URL = 'http://localhost:8000/actions';
@@ -7,6 +11,7 @@ const DATA_BASE_URL = 'http://localhost:8000/data';
 
 function NewBusiness() {
   const [data, setData] = useState([]);
+  const [success, setSuccess] = useState(false);
 
   const columns = useMemo(() => [
     {name: 'Name', id: 'name'},
@@ -39,16 +44,23 @@ function NewBusiness() {
 
   const { mutate: createBusinessMutation, isLoading: isCreatingBusiness } = useMutation(createBusiness, {
     onSuccess: () => {
-      alert('Business added successfully');
+      setSuccess(true);
     }
   });
 
   return (
-    <EditableTable 
-      columns={columns}
-      endpoint={createBusinessMutation}
-      data={data}
-      />
+    <>
+      {success && (
+          <Alert status='success'>
+            <AlertIcon />
+            Business uploaded to the server. Fire on!
+          </Alert>
+      )}
+      <EditableTable 
+        columns={columns}
+        endpoint={createBusinessMutation}
+        data={data} />
+      </>
   );
 }
 
