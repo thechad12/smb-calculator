@@ -17,7 +17,6 @@ def comp_deal_box():
 
 @bp.route('/get_businesses')
 def get_businesses():
-    params = get_params()
     data = calc.get_all_businesses()
     return json.dumps(data)
 
