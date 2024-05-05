@@ -22,6 +22,15 @@ const theme = extendTheme({
                 color: 'gray.50',
                 fontWeight: 'bold',
             }
+        },
+        ChakraLink: {
+            variants: {
+                'main': {
+                    border: '3px solid',
+                    borderRadius: '4px',
+                    textAlign: 'center',
+                }
+            }
         }
     }
 });
