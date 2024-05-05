@@ -69,6 +69,7 @@ function NewDealBox() {
   const { mutate: createDealBoxMutation, isLoading: isCreatingDealBox } = useMutation(createDealBox, {
     onSuccess: () => {
       setSuccess(true);
+      fetchDealBoxes();
     }
   });
 

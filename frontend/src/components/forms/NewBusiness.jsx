@@ -27,7 +27,6 @@ function NewBusiness() {
   const fetchBusinesses = async () => {
     const response = await fetch(`${DATA_BASE_URL}/get_businesses`);
     const data = await response.json();
-    console.log(data);
     setData(data);
   }
 
@@ -46,6 +45,7 @@ function NewBusiness() {
   const { mutate: createBusinessMutation, isLoading: isCreatingBusiness } = useMutation(createBusiness, {
     onSuccess: () => {
       setSuccess(true);
+      fetchBusinesses();
     }
   });
 

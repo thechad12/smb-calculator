@@ -59,6 +59,8 @@ function NewMetrics() {
   const { mutate: createMetricsMutation, isLoading: isCreatingMetrics } = useMutation(createMetrics, {
     onSuccess: () => {
       setSuccess(true);
+      fetchBusinesses();
+      fetchBusinessMetrics();
     }
   });
 
