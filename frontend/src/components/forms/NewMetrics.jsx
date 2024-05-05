@@ -2,9 +2,9 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import EditableTable from '../tables/EditableTable';
 import { 
-    Button,
     Alert,
     AlertIcon,
+    Select,
 } from "@chakra-ui/react";
 
 const API_BASE_URL = 'http://localhost:8000/';
@@ -28,21 +28,26 @@ function NewMetrics() {
   ]);
 
   const fetchBusinesses = async () => {
-    const response = await fetch(`${API_BASE_URL}data/get_businesses`);
+    const response = await fetch(`${API_BASE_URL}get_businesses`);
     const data = await response.json();
     setBusinesses(data);
   };
 
   const fetchBusinessMetrics = async () => {
-    const response = await fetch(`${API_BASE_URL}data/get_business_metrics/${selectedBusiness}`);
+    const response = await fetch(`${API_BASE_URL}get_business_metrics/${selectedBusiness}`);
     const data = await response.json();
     setMetricData[data];
   }
 
   useEffect(() => {
     fetchBusinesses();
-    fetchBusinessMetrics();
   }, []);
+
+  useEffect(() => {
+    if (selectedBusiness) {
+      fetchBusinessMetrics();
+    }
+  }, [selectedBusiness]);
 
   const createMetrics = async (data) => {
     const response = await fetch(`${API_BASE_URL}actions/add_business_metrics`, {
@@ -73,6 +78,11 @@ function NewMetrics() {
             Metrics uploaded to the server. Fire on!
           </Alert>
       )}
+      <Select size='md'>
+        {businesses.map((business) => {
+          <option value={business.uid}>{business.name}</option>
+        })}
+      </Select>  
       <EditableTable 
         columns={columns}
         data={metricData}

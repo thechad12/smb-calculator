@@ -7,7 +7,7 @@ import {
 import EditableTable from '../tables/EditableTable';
 
 const API_BASE_URL = 'http://localhost:8000/actions';
-const DATA_BASE_URL = 'http://localhost:8000/data';
+const DATA_BASE_URL = 'http://localhost:8000';
 
 function NewDealBox() {
   const [data, setData] = useState([]);

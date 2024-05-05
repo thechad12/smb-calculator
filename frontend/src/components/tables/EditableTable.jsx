@@ -9,14 +9,15 @@ const EditableTable = props => {
     const columns = useMemo(() => props.columns);
     const data = props.data;
     const saveEndpoint = props.saveEndpoint;
+    const saveText = props.saveText || 'Save Data';
     const [validationErrors, setValidationErrors] = useState([]);
 
     return (
         <>
-            <Button variant='ghost' onClick={saveEndpoint}>
-                Save Data
-            </Button>
             <div className='table-container'>
+                <Button variant='ghost' onClick={saveEndpoint}>
+                    {saveText}
+                </Button>
                 <Table data={data} columns={columns}/>
             </div>
         </>
