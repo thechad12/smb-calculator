@@ -1,11 +1,22 @@
 import {extendTheme} from '@chakra-ui/react';
 
 const theme = extendTheme({
+    colors: {
+        blue: {
+            200: '#84A7BA',
+            300: '#6F90AF',
+            500: '#303655',
+        },
+        gray: {
+            300: '#BFCBCE',
+        },
+
+    },
     styles: {
         global: {
             body: {
                 fontFamily: 'roboto',
-                bg: '#242582',
+                bg: '#ced2e0',
             }
         }
     },
@@ -14,12 +25,12 @@ const theme = extendTheme({
             baseStyle: {
                 fontWeight: 'bold',
                 textDecoration: 'none',
-                color: 'gray.50'
+                color: 'gray.300'
             }
         },
         FormLabel: {
             baseStyle: {
-                color: 'gray.50',
+                color: 'gray.300',
                 fontWeight: 'bold',
             }
         },

@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         )
     },
     {
-        path: "/deal-box",
+        path: "/deal-table",
         element: (
             <DealTable />
         )

@@ -1,7 +1,7 @@
 import { Link as ReactRouterLink } from 'react-router-dom'
 import { 
     Link as ChakraLink, 
-    Stack,
+    HStack,
  } from '@chakra-ui/react'
 
 
@@ -10,15 +10,14 @@ const Main = props => {
 
     return (
         <>
-            <Stack 
-                spacing={6} 
-                ml='3vw'
-                mt='3vh'
+            <HStack 
+                spacing={8} 
+                ml='7vw'
+                mt='10vh'
+                bg='blue.500'
                 position='absolute'>
                 <ChakraLink 
                     w='250px'
-                    border='3px solid'
-                    borderRadius='4px'
                     as={ReactRouterLink} 
                     to='/new-deal-box'
                     textAlign='center'>
@@ -26,8 +25,6 @@ const Main = props => {
                 </ChakraLink>
                 <ChakraLink 
                     w='250px'
-                    border='3px solid'
-                    borderRadius='4px'
                     textAlign='center'
                     as={ReactRouterLink} 
                     to='/new-business'>
@@ -35,8 +32,6 @@ const Main = props => {
                 </ChakraLink>
                 <ChakraLink 
                     w='250px'
-                    border='3px solid'
-                    borderRadius='4px'
                     textAlign='center'
                     as={ReactRouterLink} 
                     to='/new-metrics'>
@@ -44,14 +39,12 @@ const Main = props => {
                 </ChakraLink>
                 <ChakraLink
                     w='250px'
-                    border='3px solid'
-                    borderRadius='4px'
                     textAlign='center'
                     as={ReactRouterLink} 
                     to='/deal-table'>
                     Deal Box
                 </ChakraLink>
-            </Stack>
+            </HStack>
         </>
     )
 }
