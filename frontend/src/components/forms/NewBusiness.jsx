@@ -5,6 +5,7 @@ import {
   AlertIcon,
 } from '@chakra-ui/react';
 import EditableTable from '../tables/EditableTable';
+import Toolbar from '../display/Toolbar';
 
 const API_BASE_URL = 'http://localhost:8000/actions';
 const DATA_BASE_URL = 'http://localhost:8000';
@@ -51,6 +52,7 @@ function NewBusiness() {
 
   return (
     <>
+      <Toolbar/>
       {success && (
           <Alert status='success'>
             <AlertIcon />

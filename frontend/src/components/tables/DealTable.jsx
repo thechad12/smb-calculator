@@ -14,6 +14,7 @@ import {
     AlertDescription,
   } from '@chakra-ui/react'
 import {GetData} from '../../utils/api';
+import Toolbar from '../display/Toolbar';
 
 
 const DealTable = props => {
@@ -68,6 +69,7 @@ const DealTable = props => {
 
     return (
         <>
+            <Toolbar/>
             <TableContainer>
                 <Table variant='striped'>
                     <TableCaption>Current Employee List</TableCaption>

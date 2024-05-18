@@ -6,6 +6,7 @@ import {
     AlertIcon,
     Select,
 } from "@chakra-ui/react";
+import Toolbar from '../display/Toolbar';
 
 const API_BASE_URL = 'http://localhost:8000/';
 
@@ -72,6 +73,7 @@ function NewMetrics() {
 
   return (
     <>
+      <Toolbar/>
       {success && (
           <Alert status='success'>
             <AlertIcon />

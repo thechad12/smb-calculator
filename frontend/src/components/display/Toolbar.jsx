@@ -3,15 +3,23 @@ import {
     Link as ChakraLink, 
     HStack,
  } from '@chakra-ui/react';
+import MainDropdownMenu from './MainDropdownMenu';
 
 const Toolbar = props => {
+    const mt = props.mt || 0;
+    const ml = props.ml || '7vw';
+
     return (
         <>
             <HStack 
                 spacing={8} 
-                ml='7vw'
-                mt='10vh'
+                ml={0}
+                mt={mt}
+                textAlign='center'
                 bg='blue.500'
+                borderRadius='3px'
+                w='100%'
+                h='60px'
                 position='absolute'>
                 <ChakraLink 
                     w='250px'
@@ -41,6 +49,7 @@ const Toolbar = props => {
                     to='/deal-table'>
                     Deal Box
                 </ChakraLink>
+                <MainDropdownMenu />
             </HStack>
         </>
     )
