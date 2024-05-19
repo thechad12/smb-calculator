@@ -1,0 +1,5 @@
+.table-container {
+    position: absolute;
+    margin-top: 10vh;
+    overflow-x: scroll;
+}
