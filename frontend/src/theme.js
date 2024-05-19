@@ -25,7 +25,11 @@ const theme = extendTheme({
             baseStyle: {
                 fontWeight: 'bold',
                 textDecoration: 'none',
-                color: 'gray.300'
+                color: 'gray.300',
+                _hover: {
+                    textDecoration: 'none',
+                    bg: 'white',
+                }
             }
         },
         FormLabel: {

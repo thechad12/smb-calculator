@@ -22,6 +22,7 @@ const MainDropdownMenu = props => {
                 aria-label='Options'
                 icon={<HamburgerIcon />}
                 variant='outline'
+                color='gray.300'
             />
             <MenuList>
                 <MenuItem icon={<AddIcon />} command='⌘T'>
