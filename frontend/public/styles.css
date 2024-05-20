@@ -1,5 +1,15 @@
 .table-container {
-    position: absolute;
-    margin-top: 10vh;
-    overflow-x: scroll;
+    top: 10vh;
+    position: absolute; 
+    width: 100%;
+    overflow: scroll;
+    white-space: nowrap; 
+}
+
+.rs-table {
+    overflow: scroll !important;
+}
+
+.overflow-hidden {
+    overflow: scroll !important;
 }
