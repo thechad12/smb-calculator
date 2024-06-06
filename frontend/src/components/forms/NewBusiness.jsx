@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import {
   Alert,
@@ -14,11 +14,11 @@ function NewBusiness() {
   const [data, setData] = useState([]);
   const [success, setSuccess] = useState(false);
 
-  const columns = useMemo(() => [
-    {name: 'Name', id: 'name'},
-    {name: 'Location', id: 'location'},
-    {name: 'Business Type', id: 'biz_type'},
-    {name: 'Description', id: 'description'},
+  const columns = useState([
+    {headerName: 'Name', field: 'name'},
+    {headerName: 'Location', field: 'location'},
+    {headerName: 'Business Type', field: 'biz_type'},
+    {headerName: 'Description', field: 'description'},
   ]);
 
   useEffect(() => {

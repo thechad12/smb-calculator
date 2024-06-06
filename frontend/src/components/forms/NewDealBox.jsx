@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import {
   Alert,
@@ -14,19 +14,19 @@ function NewDealBox() {
   const [data, setData] = useState([]);
   const [success, setSuccess] = useState(false);
 
-  const columns = useMemo(() => [
-    {name: 'Name', id: 'name'},
-    {name: 'Valuation', id: 'valuation'},
-    {name: 'Gross Revenue', id: 'gross_revenue'},
-    {name: 'Cashflow', id: 'cashflow'},
-    {name: 'Ask Price', id: 'ask_price'},
-    {name: 'Margin', id: 'margin'},
-    {name: 'Sector', id: 'sector'},
-    {name: 'Geography', id: 'geography'},
-    {name: 'Advantages', id: 'advantages'},
-    {name: 'Multiple', id: 'multiple'},
-    {name: 'Investor', id: 'investor'},
-    {name: 'Scale', id: 'scale'},
+  const columns = useState([
+    {headerName: 'Name', field: 'name'},
+    {headerName: 'Valuation', field: 'valuation'},
+    {headerName: 'Gross Revenue', field: 'gross_revenue'},
+    {headerName: 'Cashflow', field: 'cashflow'},
+    {headerName: 'Ask Price', field: 'ask_price'},
+    {headerName: 'Margin', field: 'margin'},
+    {headerName: 'Sector', field: 'sector'},
+    {headerName: 'Geography', field: 'geography'},
+    {headerName: 'Advantages', field: 'advantages'},
+    {headerName: 'Multiple', field: 'multiple'},
+    {headerName: 'Investor', field: 'investor'},
+    {headerName: 'Scale', field: 'scale'},
   ]);
 
   useEffect(() => {

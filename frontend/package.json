@@ -11,6 +11,7 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@tanstack/react-query": "^5.18.1",
+    "ag-grid-react": "^31.3.2",
     "framer-motion": "^11.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -19,7 +20,6 @@
     "react-router-dom": "^6.22.0",
     "react-scripts": "^5.0.1",
     "react-table": "^7.8.0",
-    "rowstack": "^0.0.25",
     "webpack": "^5.90.1",
     "webpack-cli": "^5.1.4"
   },

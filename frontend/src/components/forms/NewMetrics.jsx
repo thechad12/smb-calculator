@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import EditableTable from '../tables/EditableTable';
 import { 
@@ -16,16 +16,16 @@ function NewMetrics() {
   const [metricData, setMetricData] = useState([]);
   const [success, setSuccess] = useState(false);
 
-  const columns = useMemo(() => [
-    {name: 'Cashflow', id: 'cashflow'},
-    {name: 'Ask Price', id: 'ask_price'},
-    {name: 'Gross Revenue', id: 'gross_revenue'},
-    {name: 'EBITDA', id: 'ebitda'},
-    {name: 'Valuation', id: 'valuation'},
-    {name: 'Sector', id: 'sector'},
-    {name: 'Geography', id: 'geography'},
-    {name: 'Advantages', id: 'advantages'},
-    {name: 'Multiple', id: 'multiple'},
+  const columns = useState([
+    {headerName: 'Cashflow', field: 'cashflow'},
+    {headerName: 'Ask Price', field: 'ask_price'},
+    {headerName: 'Gross Revenue', field: 'gross_revenue'},
+    {headerName: 'EBITDA', field: 'ebitda'},
+    {headerName: 'Valuation', field: 'valuation'},
+    {headerName: 'Sector', field: 'sector'},
+    {headerName: 'Geography', field: 'geography'},
+    {headerName: 'Advantages', field: 'advantages'},
+    {headerName: 'Multiple', field: 'multiple'},
   ]);
 
   const fetchBusinesses = async () => {
