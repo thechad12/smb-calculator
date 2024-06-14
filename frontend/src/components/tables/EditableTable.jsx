@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
     Button
 } from '@chakra-ui/react';
@@ -14,6 +14,13 @@ const EditableTable = props => {
     const saveText = props.saveText || 'Save Data';
     const [validationErrors, setValidationErrors] = useState([]);
 
+    const defaultColDef = useMemo(() => {
+        return {
+          filter: 'agTextColumnFilter',
+          floatingFilter: true,
+        }
+      }, []);
+
     return (
         <>
             <div className='table-container'>
@@ -26,6 +33,8 @@ const EditableTable = props => {
                 <AgGridReact
                     rowData={data}
                     columnDefs={columns}
+                    defaultColDef={defaultColDef}
+                    pagination
                 />
                 </div>
             </div>

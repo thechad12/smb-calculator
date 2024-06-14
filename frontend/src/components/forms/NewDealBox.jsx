@@ -15,18 +15,66 @@ function NewDealBox() {
   const [success, setSuccess] = useState(false);
 
   const columns = useState([
-    {headerName: 'Name', field: 'name'},
-    {headerName: 'Valuation', field: 'valuation'},
-    {headerName: 'Gross Revenue', field: 'gross_revenue'},
-    {headerName: 'Cashflow', field: 'cashflow'},
-    {headerName: 'Ask Price', field: 'ask_price'},
-    {headerName: 'Margin', field: 'margin'},
-    {headerName: 'Sector', field: 'sector'},
-    {headerName: 'Geography', field: 'geography'},
-    {headerName: 'Advantages', field: 'advantages'},
-    {headerName: 'Multiple', field: 'multiple'},
-    {headerName: 'Investor', field: 'investor'},
-    {headerName: 'Scale', field: 'scale'},
+    {
+      headerName: 'Name', 
+      field: 'name', 
+      editable: true
+    },
+    {
+      headerName: 'Valuation', 
+      field: 'valuation', 
+      editable: true
+    },
+    {
+      headerName: 'Gross Revenue', 
+      field: 'gross_revenue', 
+      editable: true
+    },
+    {
+      headerName: 'Cashflow', 
+      field: 'cashflow', 
+      editable: true
+    },
+    {
+      headerName: 'Ask Price', 
+      field: 'ask_price', 
+      editable: true
+    },
+    {
+      headerName: 'Margin', 
+      field: 'margin', 
+      editable: true
+    },
+    {
+      headerName: 'Sector', 
+      field: 'sector', 
+      editable: true
+    },
+    {
+      headerName: 'Geography', 
+      field: 'geography', 
+      editable: true
+    },
+    {
+      headerName: 'Advantages', 
+      field: 'advantages', 
+      editable: true
+    },
+    {
+      headerName: 'Multiple', 
+      field: 'multiple', 
+      editable: true
+    },
+    {
+      headerName: 'Investor', 
+      field: 'investor', 
+      editable: true
+    },
+    {
+      headerName: 'Scale', 
+      field: 'scale', 
+      editable: true
+    },
   ]);
 
   useEffect(() => {

@@ -80,7 +80,7 @@ function NewMetrics() {
             Metrics uploaded to the server. Fire on!
           </Alert>
       )}
-      <Select size='md'>
+      <Select size='md' position='relative' top='10rem'>
         {businesses.map((business) => {
           <option value={business.uid}>{business.name}</option>
         })}
