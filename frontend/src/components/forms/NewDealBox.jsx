@@ -6,6 +6,7 @@ import {
 } from '@chakra-ui/react'
 import EditableTable from '../tables/EditableTable';
 import Toolbar from '../display/Toolbar';
+import { blankRowFromEmptyData } from '../../utils/format';
 
 const API_BASE_URL = 'http://localhost:8000/actions';
 const DATA_BASE_URL = 'http://localhost:8000';
@@ -14,7 +15,7 @@ function NewDealBox() {
   const [data, setData] = useState([]);
   const [success, setSuccess] = useState(false);
 
-  const columns = useState([
+  const [columns, setColumns] = useState([
     {
       headerName: 'Name', 
       field: 'name', 
@@ -84,7 +85,7 @@ function NewDealBox() {
   const fetchDealBoxes = async () => {
     const response = await fetch(`${DATA_BASE_URL}/get_deal_boxes`);
     const data = await response.json();
-    setData(data);
+    setData(blankRowFromEmptyData(columns, data));
   }
 
   const createDealBox = async (data) => {

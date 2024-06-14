@@ -7,6 +7,7 @@ import {
     Select,
 } from "@chakra-ui/react";
 import Toolbar from '../display/Toolbar';
+import { blankRowFromEmptyData } from '../../utils/format';
 
 const API_BASE_URL = 'http://localhost:8000/';
 
@@ -16,16 +17,16 @@ function NewMetrics() {
   const [metricData, setMetricData] = useState([]);
   const [success, setSuccess] = useState(false);
 
-  const columns = useState([
-    {headerName: 'Cashflow', field: 'cashflow'},
-    {headerName: 'Ask Price', field: 'ask_price'},
-    {headerName: 'Gross Revenue', field: 'gross_revenue'},
-    {headerName: 'EBITDA', field: 'ebitda'},
-    {headerName: 'Valuation', field: 'valuation'},
-    {headerName: 'Sector', field: 'sector'},
-    {headerName: 'Geography', field: 'geography'},
-    {headerName: 'Advantages', field: 'advantages'},
-    {headerName: 'Multiple', field: 'multiple'},
+  const [columns, setColumns] = useState([
+    {headerName: 'Cashflow', field: 'cashflow', editable: true},
+    {headerName: 'Ask Price', field: 'ask_price', editable: true},
+    {headerName: 'Gross Revenue', field: 'gross_revenue', editable: true},
+    {headerName: 'EBITDA', field: 'ebitda', editable: true},
+    {headerName: 'Valuation', field: 'valuation', editable: true},
+    {headerName: 'Sector', field: 'sector', editable: true},
+    {headerName: 'Geography', field: 'geography', editable: true},
+    {headerName: 'Advantages', field: 'advantages', editable: true},
+    {headerName: 'Multiple', field: 'multiple', editable: true},
   ]);
 
   const fetchBusinesses = async () => {
@@ -37,7 +38,7 @@ function NewMetrics() {
   const fetchBusinessMetrics = async () => {
     const response = await fetch(`${API_BASE_URL}get_business_metrics/${selectedBusiness}`);
     const data = await response.json();
-    setMetricData[data];
+    setMetricData(blankRowFromEmptyData(columns, data));
   }
 
   useEffect(() => {

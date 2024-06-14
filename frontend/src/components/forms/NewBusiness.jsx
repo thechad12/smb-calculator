@@ -6,6 +6,7 @@ import {
 } from '@chakra-ui/react';
 import EditableTable from '../tables/EditableTable';
 import Toolbar from '../display/Toolbar';
+import { blankRowFromEmptyData } from '../../utils/format';
 
 const API_BASE_URL = 'http://localhost:8000/actions';
 const DATA_BASE_URL = 'http://localhost:8000';
@@ -14,11 +15,11 @@ function NewBusiness() {
   const [data, setData] = useState([]);
   const [success, setSuccess] = useState(false);
 
-  const columns = useState([
-    {headerName: 'Name', field: 'name'},
-    {headerName: 'Location', field: 'location'},
-    {headerName: 'Business Type', field: 'biz_type'},
-    {headerName: 'Description', field: 'description'},
+  const [columns, setColumns] = useState([
+    {headerName: 'Name', field: 'name', editable: true},
+    {headerName: 'Location', field: 'location', editable: true},
+    {headerName: 'Business Type', field: 'biz_type', editable: true},
+    {headerName: 'Description', field: 'description', editable: true},
   ]);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ function NewBusiness() {
   const fetchBusinesses = async () => {
     const response = await fetch(`${DATA_BASE_URL}/get_businesses`);
     const data = await response.json();
-    setData(data);
+    setData(blankRowFromEmptyData(columns, data));
   }
 
   const createBusiness = async (data) => {
