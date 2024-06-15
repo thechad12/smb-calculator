@@ -63,6 +63,11 @@ function NewBusiness() {
       <EditableTable 
         columns={columns}
         endpoint={createBusinessMutation}
+        width="55rem"
+        styleProps={{
+          left: '10rem',
+          position: 'relative'
+        }}
         data={data} />
       </>
   );

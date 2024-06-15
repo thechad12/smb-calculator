@@ -12,6 +12,8 @@ const EditableTable = props => {
     const data = props.data;
     const saveEndpoint = props.saveEndpoint;
     const saveText = props.saveText || 'Save Data';
+    const width = props.width || '100%';
+    const styleProps = props.styleProps || {};
     const [validationErrors, setValidationErrors] = useState([]);
 
     const defaultColDef = useMemo(() => {
@@ -28,7 +30,7 @@ const EditableTable = props => {
                     {saveText}
                 </Button>
                 <div className="ag-theme-quartz" // applying the grid theme
-                style={{ height: 500 }} // the grid will fill the size of the parent container
+                style={{ height: 500, width: width, ...styleProps }} // the grid will fill the size of the parent container
                 >
                 <AgGridReact
                     rowData={data}

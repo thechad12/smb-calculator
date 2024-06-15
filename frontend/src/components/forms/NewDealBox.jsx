@@ -8,7 +8,6 @@ import EditableTable from '../tables/EditableTable';
 import Toolbar from '../display/Toolbar';
 import { blankRowFromEmptyData } from '../../utils/format';
 
-const API_BASE_URL = 'http://localhost:8000/actions';
 const DATA_BASE_URL = 'http://localhost:8000';
 
 function NewDealBox() {
@@ -101,11 +100,12 @@ function NewDealBox() {
       revenue_low: data.revenue ? data.revenue.split('-')[0] : 0,
       revenue_high: data.revenue ? data.revenue.split('-')[1] : 0,
       sector: data.sector ? data.sector.split(';') : [],
+      margin: data.margin,
       geography: data.geography ? data.geography.split(';') : [],
       advantages: data.advantages ? data.advantages.split(';') : []
     };
 
-    const response = await fetch(`${API_BASE_URL}/add_deal_box`, {
+    const response = await fetch(`${DATA_BASE_URL}/add_deal_box`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -135,7 +135,7 @@ function NewDealBox() {
       )}
       <EditableTable 
         columns={columns}
-        endpoint={createDealBoxMutation}
+        saveEndpoint={() => createDealBoxMutation(data)}
         data={data} />
       </>
   );
