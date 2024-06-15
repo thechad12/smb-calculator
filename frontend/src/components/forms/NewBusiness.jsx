@@ -3,6 +3,10 @@ import { useMutation } from 'react-query';
 import {
   Alert,
   AlertIcon,
+  Box,
+  CloseButton,
+  useDisclosure,
+  AlertDescription
 } from '@chakra-ui/react';
 import EditableTable from '../tables/EditableTable';
 import Toolbar from '../display/Toolbar';
@@ -20,6 +24,13 @@ function NewBusiness() {
     {headerName: 'Business Type', field: 'biz_type', editable: true},
     {headerName: 'Description', field: 'description', editable: true},
   ]);
+
+  const {
+    isOpen: isVisible,
+    onClose,
+    onOpen,
+  } = useDisclosure({ defaultIsOpen: true })
+
 
   useEffect(() => {
     fetchBusinesses();
@@ -53,10 +64,21 @@ function NewBusiness() {
   return (
     <>
       <Toolbar/>
-      {success && (
+      {(success && isVisible) && (
           <Alert status='success'>
             <AlertIcon />
-            Business uploaded to the server. Fire on!
+            <Box>
+              <AlertDescription>
+                Business uploaded to the server. Fire on!
+              </AlertDescription>
+            </Box>
+            <CloseButton
+              alignSelf='flex-start'
+              position='relative'
+              right={-1}
+              top={-1}
+              onClick={onClose}
+            />    
           </Alert>
       )}
       <EditableTable 

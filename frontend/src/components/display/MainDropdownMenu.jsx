@@ -26,16 +26,16 @@ const MainDropdownMenu = props => {
             />
             <MenuList>
                 <MenuItem icon={<AddIcon />} command='⌘T'>
-                New Tab
+                    Business Diligence
                 </MenuItem>
                 <MenuItem icon={<ExternalLinkIcon />} command='⌘N'>
-                New Window
+                    Business Comparisons
                 </MenuItem>
                 <MenuItem icon={<RepeatIcon />} command='⌘⇧N'>
-                Open Closed Tab
+                    Portfolio Analytics
                 </MenuItem>
                 <MenuItem icon={<EditIcon />} command='⌘O'>
-                Open File...
+                    Feed
                 </MenuItem>
             </MenuList>
         </Menu>

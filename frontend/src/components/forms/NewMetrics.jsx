@@ -5,6 +5,10 @@ import {
     Alert,
     AlertIcon,
     Select,
+    Box,
+    CloseButton,
+    useDisclosure,
+    AlertDescription
 } from "@chakra-ui/react";
 import Toolbar from '../display/Toolbar';
 import { blankRowFromEmptyData } from '../../utils/format';
@@ -16,6 +20,12 @@ function NewMetrics() {
   const [selectedBusiness, setSelectedBusiness] = useState('');
   const [metricData, setMetricData] = useState([]);
   const [success, setSuccess] = useState(false);
+
+  const {
+    isOpen: isVisible,
+    onClose,
+    onOpen,
+  } = useDisclosure({ defaultIsOpen: true })
 
   const [columns, setColumns] = useState([
     {headerName: 'Cashflow', field: 'cashflow', editable: true},
@@ -75,11 +85,22 @@ function NewMetrics() {
   return (
     <>
       <Toolbar/>
-      {success && (
+      {(success && isVisible) && (
           <Alert status='success'>
-            <AlertIcon />
-            Metrics uploaded to the server. Fire on!
-          </Alert>
+          <AlertIcon />
+          <Box>
+            <AlertDescription>
+              Metrics uploaded to the server. Fire on!
+            </AlertDescription>
+          </Box>
+          <CloseButton
+            alignSelf='flex-start'
+            position='relative'
+            right={-1}
+            top={-1}
+            onClick={onClose}
+          />    
+        </Alert>
       )}
       <Select size='md' position='relative' top='10rem'>
         {businesses.map((business) => {

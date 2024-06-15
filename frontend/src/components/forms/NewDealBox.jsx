@@ -3,6 +3,10 @@ import { useMutation } from 'react-query';
 import {
   Alert,
   AlertIcon,
+  CloseButton,
+  Box,
+  useDisclosure,
+  AlertDescription
 } from '@chakra-ui/react'
 import EditableTable from '../tables/EditableTable';
 import Toolbar from '../display/Toolbar';
@@ -13,6 +17,12 @@ const DATA_BASE_URL = 'http://localhost:8000';
 function NewDealBox() {
   const [data, setData] = useState([]);
   const [success, setSuccess] = useState(false);
+
+  const {
+    isOpen: isVisible,
+    onClose,
+    onOpen,
+  } = useDisclosure({ defaultIsOpen: true })
 
   const [columns, setColumns] = useState([
     {
@@ -127,11 +137,22 @@ function NewDealBox() {
   return (
     <>
       <Toolbar/>
-      {success && (
+      {(success && isVisible) && (
           <Alert status='success'>
-            <AlertIcon />
-            Deal Box uploaded to the server. Fire on!
-          </Alert>
+          <AlertIcon />
+          <Box>
+            <AlertDescription>
+              Deal Box uploaded to the server. Fire on!
+            </AlertDescription>
+          </Box>
+          <CloseButton
+            alignSelf='flex-start'
+            position='relative'
+            right={-1}
+            top={-1}
+            onClick={onClose}
+          />    
+        </Alert>
       )}
       <EditableTable 
         columns={columns}
