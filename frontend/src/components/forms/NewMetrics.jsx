@@ -52,7 +52,7 @@ function NewMetrics() {
   }, [selectedBusiness]);
 
   const createMetrics = async (data) => {
-    const response = await fetch(`${API_BASE_URL}actions/add_business_metrics`, {
+    const response = await fetch(`${API_BASE_URL}add_business_metrics`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -89,7 +89,7 @@ function NewMetrics() {
       <EditableTable 
         columns={columns}
         data={metricData}
-        endpoint={createMetricsMutation} />
+        saveEndpoint={() => createMetricsMutation(data)} />
     </>
   );
 }

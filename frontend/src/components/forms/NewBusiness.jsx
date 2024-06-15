@@ -8,7 +8,6 @@ import EditableTable from '../tables/EditableTable';
 import Toolbar from '../display/Toolbar';
 import { blankRowFromEmptyData } from '../../utils/format';
 
-const API_BASE_URL = 'http://localhost:8000/actions';
 const DATA_BASE_URL = 'http://localhost:8000';
 
 function NewBusiness() {
@@ -33,7 +32,7 @@ function NewBusiness() {
   }
 
   const createBusiness = async (data) => {
-    const response = await fetch(`${API_BASE_URL}/add_business`, {
+    const response = await fetch(`${DATA_BASE_URL}/add_business`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -62,7 +61,7 @@ function NewBusiness() {
       )}
       <EditableTable 
         columns={columns}
-        endpoint={createBusinessMutation}
+        saveEndpoint={() => createBusinessMutation(data)}
         width="55rem"
         styleProps={{
           left: '10rem',
