@@ -156,7 +156,7 @@ function NewDealBox() {
       )}
       <EditableTable 
         columns={columns}
-        saveEndpoint={() => createDealBoxMutation(data)}
+        saveEndpoint={createDealBoxMutation}
         data={data} />
       </>
   );

@@ -83,7 +83,7 @@ function NewBusiness() {
       )}
       <EditableTable 
         columns={columns}
-        saveEndpoint={() => createBusinessMutation(data)}
+        saveEndpoint={createBusinessMutation}
         width="55rem"
         styleProps={{
           left: '10rem',
