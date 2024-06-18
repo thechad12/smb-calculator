@@ -13,7 +13,7 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { insertNewRow } from '../../utils/format';
 
-const EditableTable = props => {
+const EditableTable = (props) => {
 
     const columns = props.columns;
     const data = props.data;
@@ -51,7 +51,7 @@ const EditableTable = props => {
     return (
         <>
             <div className='table-container'>
-                <Button variant='ghost' onClick={() => saveEndpoint(getRowData)}>
+                <Button variant='ghost' onClick={() => saveEndpoint(getRowData())}>
                     {saveText}
                 </Button>
                 <Button variant='ghost' onClick={() => addBlankRow(data.length || 0)}>
@@ -61,6 +61,7 @@ const EditableTable = props => {
                 style={{ height: 500, width: width, ...styleProps }} // the grid will fill the size of the parent container
                 >
                 <AgGridReact
+                    ref={gridRef}
                     rowData={data}
                     columnDefs={columns}
                     defaultColDef={defaultColDef}

@@ -46,6 +46,7 @@ function NewBusiness() {
     const response = await fetch(`${DATA_BASE_URL}/add_business`, {
       method: 'POST',
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
