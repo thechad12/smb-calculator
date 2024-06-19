@@ -5,24 +5,29 @@ from database.models.business import Business
 from database.models.deal_box import DealBox
 from database.models.metrics import Metrics
 from main import db
+from routes.utils import validate_required_fields
 
 actions = Blueprint('actions', __name__)
 
 @actions.route('/add_business', methods=['POST'])
 def add_business():
     data = request.get_json()
+    if isinstance(data, list):
+        data = data[0]
     required_fields = (
         'name', 
         'location', 
         'description', 
         'biz_type'
     )
+    validate_required_fields(data, required_fields) 
 
-    # Validate the incoming data
-    if not all(key in data for key in required_fields):
-        return jsonify({'error': 'Missing required fields'}), 400
-
-    new_business = Business(**data)
+    new_business = Business(
+        name=data.get('name'),
+        location=data.get('location'),
+        description=data.get('description'),
+        biz_type=data.get('biz_type'),
+    )
     db.session.add(new_business)
     db.session.commit()
 
@@ -39,10 +44,7 @@ def add_deal_box():
         'revenue_low', 
         'revenue_high'
     )
-
-    # Validate the incoming data
-    if not all(key in data for key in required_fields):
-        return jsonify({'error': 'Missing required fields'}), 400
+    validate_required_fields(data, required_fields)
 
     new_deal_box = DealBox(**data)
     db.session.add(new_deal_box)
@@ -74,9 +76,7 @@ def add_business_metrics():
         return jsonify({'error': 'Business does not exist'}), 400
     data['business_uid'] = business.uid
     # Validate the incoming data
-    if not all(key in data for key in required_fields):
-        return jsonify({'error': 'Missing required fields'}), 400
-
+    validate_required_fields(data, required_fields)
 
     new_metrics = Metrics(**{**data})
     db.session.add(new_metrics)
