@@ -54,7 +54,7 @@ const Toolbar = props => {
                     textAlign='left'
                     as={ReactRouterLink} 
                     to='/business-diligence'>
-                    Business Diligence
+                    Business Diligence Comparison
                 </ChakraLink>
                 <ChakraLink
                     w='250px'
