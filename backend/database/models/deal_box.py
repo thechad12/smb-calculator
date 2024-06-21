@@ -1,12 +1,13 @@
 from main import db
 import sqlalchemy
+from uuid import uuid4
 from sqlalchemy.types import ARRAY
 from sqlalchemy.dialects.postgresql import UUID
 
 class DealBox(db.Model):
 
     uid = db.Column(UUID(as_uuid=True), primary_key=True, 
-                    server_default=sqlalchemy.text("uuid_generate_v4()"),)
+                    default=uuid4)
     name = db.Column(db.String, nullable=False)
     valuation_low = db.Column(db.Float)
     valuation_high = db.Column(db.Float)
