@@ -1,9 +1,10 @@
 .table-container {
-    top: 10vh;
+    top: 5rem;
     position: absolute; 
     width: 100%;
     overflow: scroll;
-    white-space: nowrap; 
+    white-space: nowrap;
+    margin-left: 20rem;
 }
 
 .rs-table {

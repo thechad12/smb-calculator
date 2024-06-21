@@ -86,10 +86,6 @@ function NewBusiness() {
         columns={columns}
         saveEndpoint={createBusinessMutation}
         width="55rem"
-        styleProps={{
-          left: '10rem',
-          position: 'relative'
-        }}
         data={data} />
       </>
   );

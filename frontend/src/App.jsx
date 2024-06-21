@@ -24,13 +24,13 @@ const router = createBrowserRouter([
         )
     },
     {
-        path: "/deal-table",
+        path: "/business-diligence",
         element: (
             <DealTable />
         )
     },
     {
-        path: "/new-deal-box",
+        path: "/new-business-diligence",
         element: (
             <NewDealBox />
         )

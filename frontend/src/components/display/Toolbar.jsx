@@ -1,7 +1,7 @@
 import { Link as ReactRouterLink } from 'react-router-dom'
 import { 
     Link as ChakraLink, 
-    HStack,
+    Stack,
  } from '@chakra-ui/react';
 import MainDropdownMenu from './MainDropdownMenu';
 
@@ -11,46 +11,66 @@ const Toolbar = props => {
 
     return (
         <>
-            <HStack 
+            <Stack 
                 spacing={8} 
                 ml={0}
                 mt={mt}
-                textAlign='center'
+                textAlign='left'
                 bg='blue.500'
-                borderRadius='3px'
-                w='100%'
-                h='60px'
-                position='absolute'>
+                z='1000000'
+                w='15rem'
+                h='100vw'
+                position='relative'>
                 <ChakraLink 
                     w='250px'
                     as={ReactRouterLink} 
-                    to='/new-deal-box'
-                    textAlign='center'>
-                    Create a deal box
+                    to='/new-business-diligence'
+                    textAlign='left'>
+                    Main Feed
                 </ChakraLink>
                 <ChakraLink 
                     w='250px'
-                    textAlign='center'
+                    as={ReactRouterLink} 
+                    to='/new-business-diligence'
+                    textAlign='left'>
+                    Create Business Diligence
+                </ChakraLink>
+                <ChakraLink 
+                    w='250px'
+                    textAlign='left'
                     as={ReactRouterLink} 
                     to='/new-business'>
                     Create a business
                 </ChakraLink>
                 <ChakraLink 
                     w='250px'
-                    textAlign='center'
+                    textAlign='left'
                     as={ReactRouterLink} 
                     to='/new-metrics'>
                     Attach Metrics to a Business
                 </ChakraLink>
                 <ChakraLink
                     w='250px'
-                    textAlign='center'
+                    textAlign='left'
                     as={ReactRouterLink} 
-                    to='/deal-table'>
-                    Deal Box
+                    to='/business-diligence'>
+                    Business Diligence
                 </ChakraLink>
-                <MainDropdownMenu />
-            </HStack>
+                <ChakraLink
+                    w='250px'
+                    textAlign='left'
+                    as={ReactRouterLink} 
+                    to='/business-diligence'>
+                    Add a Business
+                </ChakraLink>
+                <ChakraLink
+                    w='250px'
+                    textAlign='left'
+                    as={ReactRouterLink} 
+                    to='/business-diligence'>
+                    Import
+                </ChakraLink>
+            </Stack>
         </>
     )
 }

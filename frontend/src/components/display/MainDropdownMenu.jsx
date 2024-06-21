@@ -25,6 +25,9 @@ const MainDropdownMenu = props => {
                 color='gray.300'
             />
             <MenuList>
+                <MenuItem icon={<EditIcon />} command='⌘O'>
+                    Main Feed
+                </MenuItem>
                 <MenuItem icon={<AddIcon />} command='⌘T'>
                     Business Diligence
                 </MenuItem>
@@ -34,8 +37,11 @@ const MainDropdownMenu = props => {
                 <MenuItem icon={<RepeatIcon />} command='⌘⇧N'>
                     Portfolio Analytics
                 </MenuItem>
-                <MenuItem icon={<EditIcon />} command='⌘O'>
-                    Feed
+                <MenuItem icon={<RepeatIcon />} command='⌘⇧N'>
+                    Add a Business
+                </MenuItem>
+                <MenuItem icon={<RepeatIcon />} command='⌘⇧N'>
+                    Import
                 </MenuItem>
             </MenuList>
         </Menu>
