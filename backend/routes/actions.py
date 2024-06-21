@@ -46,7 +46,22 @@ def add_deal_box():
     )
     validate_required_fields(data, required_fields)
 
-    new_deal_box = DealBox(**data)
+    new_deal_box = DealBox(
+        name=data.get('name'),
+        valuation_low=data.get('valuation_low'),
+        valuation_high=data.get('valuation_high'),
+        revenue_low=data.get('revenue_low'),
+        revenue_high=data.get('revenue_high'),
+        cashflow_low=data.get('cashflow_low'),
+        cashflow_high=data.get('cashflow_high'),
+        ask_price_low=data.get('ask_price_low'),
+        ask_price_high=data.get('ask_price_high'),
+        margin=data.get('margin'),
+        sector=data.get('sector'),
+        advantages=data.get('advantages'),
+        multiple_low=data.get('multiple_low'),
+        multiple_high=data.get('multiple_high'),
+    )
     db.session.add(new_deal_box)
     db.session.commit()
 

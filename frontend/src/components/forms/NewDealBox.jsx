@@ -115,6 +115,8 @@ function NewDealBox() {
       advantages: data.advantages ? data.advantages.split(';') : []
     };
 
+    console.log(adjustedData);
+
     const response = await fetch(`${DATA_BASE_URL}/add_deal_box`, {
       method: 'POST',
       headers: {

@@ -35,7 +35,6 @@ def validate_required_fields(data: Union[list, dict], fields: tuple, allow_recov
     else:
         if not all(key in data.keys() for key in fields):
             print("not all required fields are entered: ")
-            print("entry: %s" % str(entry))
             print("required fields: %s" % str(fields))
             if not allow_recovery:
                 return False
