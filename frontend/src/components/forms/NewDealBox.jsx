@@ -158,6 +158,7 @@ function NewDealBox() {
       )}
       <EditableTable 
         columns={columns}
+        width="58rem"
         saveEndpoint={createDealBoxMutation}
         data={data} />
       </>

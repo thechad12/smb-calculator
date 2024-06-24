@@ -110,6 +110,7 @@ function NewMetrics() {
       <EditableTable 
         columns={columns}
         data={metricData}
+        width="58rem"
         saveEndpoint={createMetricsMutation} />
     </>
   );
