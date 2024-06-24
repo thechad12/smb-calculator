@@ -98,31 +98,12 @@ function NewDealBox() {
   }
 
   const createDealBox = async (data) => {
-    // Adjust list-type fields
-    const adjustedData = {
-      ...data,
-      cashflow_low: data.cashflow ? data.cashflow.split('-')[0] : 0,
-      cashflow_high: data.cashflow ? data.cashflow.split('-')[1] : 0,
-      valuation_low: data.valuation ? data.valuation.split('-')[0] : 0,
-      valuation_high: data.valuation ? data.valuation.split('-')[1] : 0,
-      ask_price_low: data.ask_price ? data.ask_price.split('-')[0] : 0,
-      ask_price_high: data.ask_price ? data.ask_price.split('-')[1] : 0,
-      revenue_low: data.revenue ? data.revenue.split('-')[0] : 0,
-      revenue_high: data.revenue ? data.revenue.split('-')[1] : 0,
-      sector: data.sector ? data.sector.split(';') : [],
-      margin: data.margin,
-      geography: data.geography ? data.geography.split(';') : [],
-      advantages: data.advantages ? data.advantages.split(';') : []
-    };
-
-    console.log(adjustedData);
-
     const response = await fetch(`${DATA_BASE_URL}/add_deal_box`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(adjustedData)
+      body: JSON.stringify(data)
     });
     const responseData = await response.json();
     return responseData;

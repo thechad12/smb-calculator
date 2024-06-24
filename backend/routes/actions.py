@@ -34,9 +34,30 @@ def add_business():
     return jsonify({'message': 'Business added successfully'}), 201
 
 
+def _map_data_to_deal_box(data: dict) -> dict:
+    return {
+        'name': data.get('name'),
+        'valuation_low': float(data.get('valuation').split('-')[0]),
+        'valuation_high': float(data.get('valuation').split('-')[1]),
+        'revenue_low': float(data.get('revenue').split('-')[0]),
+        'revenue_high': float(data.get('revenue').split('-')[1]),
+        'cashflow_low': float(data.get('cashflow').split('-')[0]),
+        'cashflow_high': float(data.get('cashflow').split('-')[1]),
+        'ask_price_low': float(data.get('ask_price').split('-')[0]),
+        'margin': float(data.get('margin')),
+        'sector': data.get('sector').split(';'),
+        'advantages': data.get('advantages').split(';'),
+        'multiple_low': float(data.get('multiple').split('-')[0]),
+        'multiple_high': float(data.get('multiple').split('-')[1]),
+    }
+
+
 @actions.route('/add_deal_box', methods=['POST'])
 def add_deal_box():
     data = request.get_json()
+    print(data)
+    print(type(data))
+    adjusted_data = _map_data_to_deal_box(data)
     required_fields = (
         'name', 
         'valuation_low', 
@@ -44,23 +65,23 @@ def add_deal_box():
         'revenue_low', 
         'revenue_high'
     )
-    validate_required_fields(data, required_fields)
+    validate_required_fields(adjusted_data, required_fields)
 
     new_deal_box = DealBox(
-        name=data.get('name'),
-        valuation_low=data.get('valuation_low'),
-        valuation_high=data.get('valuation_high'),
-        revenue_low=data.get('revenue_low'),
-        revenue_high=data.get('revenue_high'),
-        cashflow_low=data.get('cashflow_low'),
-        cashflow_high=data.get('cashflow_high'),
-        ask_price_low=data.get('ask_price_low'),
-        ask_price_high=data.get('ask_price_high'),
-        margin=data.get('margin'),
-        sector=data.get('sector'),
-        advantages=data.get('advantages'),
-        multiple_low=data.get('multiple_low'),
-        multiple_high=data.get('multiple_high'),
+        name=adjusted_data.get('name'),
+        valuation_low=adjusted_data.get('valuation_low'),
+        valuation_high=adjusted_data.get('valuation_high'),
+        revenue_low=adjusted_data.get('revenue_low'),
+        revenue_high=adjusted_data.get('revenue_high'),
+        cashflow_low=adjusted_data.get('cashflow_low'),
+        cashflow_high=adjusted_data.get('cashflow_high'),
+        ask_price_low=adjusted_data.get('ask_price_low'),
+        ask_price_high=adjusted_data.get('ask_price_high'),
+        margin=adjusted_data.get('margin'),
+        sector=adjusted_data.get('sector'),
+        advantages=adjusted_data.get('advantages'),
+        multiple_low=adjusted_data.get('multiple_low'),
+        multiple_high=adjusted_data.get('multiple_high'),
     )
     db.session.add(new_deal_box)
     db.session.commit()
