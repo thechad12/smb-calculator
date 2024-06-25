@@ -17,9 +17,11 @@ export const blankRowFromEmptyData = (columns,data) => {
 // create empty row from columns
 export const insertNewRow = columns => {
     let newData = [];
+    let dataset = {};
     for (let i=0; i<columns.length; i++) {
         let field = columns[i].field;
-        newData.push({[field]: ''});
+        dataset[field] = '';
     }
+    newData.push(dataset);
     return newData;
 };

@@ -56,7 +56,9 @@ def _map_data_to_deal_box(data: dict) -> dict:
 @actions.route('/add_deal_box', methods=['POST'])
 def add_deal_box():
     data = request.get_json()
-    adjusted_data = _map_data_to_deal_box(data[0])
+    if isinstance(data, list):
+        data = data[0]
+    adjusted_data = _map_data_to_deal_box(data)
     required_fields = (
         'name', 
         'valuation_low', 
