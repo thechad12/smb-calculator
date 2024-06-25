@@ -61,14 +61,7 @@ const Toolbar = props => {
                     textAlign='left'
                     as={ReactRouterLink} 
                     to='/business-diligence'>
-                    Add a Business
-                </ChakraLink>
-                <ChakraLink
-                    w='250px'
-                    textAlign='left'
-                    as={ReactRouterLink} 
-                    to='/business-diligence'>
-                    Import
+                    Import Data
                 </ChakraLink>
             </Stack>
         </>
