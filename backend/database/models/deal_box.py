@@ -45,8 +45,8 @@ class DealBox(db.Model):
             'profit': f'{str(self.profit_low)} - {str(self.profit_high)}',
             'sector': self.sector,
             'investor': self.investor,
-            'geography': list(self.geography),
+            'geography': self.geography,
             'scale': self.scale,
-            'advantages': list(self.advantages),
+            'advantages': self.advantages,
             'multiple': f'{str(self.multiple_low)} - {str(self.multiple_high)}',
         }

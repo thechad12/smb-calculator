@@ -39,8 +39,8 @@ def _map_data_to_deal_box(data: dict) -> dict:
         'name': data.get('name'),
         'valuation_low': float(data.get('valuation').split('-')[0]),
         'valuation_high': float(data.get('valuation').split('-')[1]),
-        'revenue_low': float(data.get('revenue').split('-')[0]),
-        'revenue_high': float(data.get('revenue').split('-')[1]),
+        'revenue_low': float(data.get('gross_revenue').split('-')[0]),
+        'revenue_high': float(data.get('gross_revenue').split('-')[1]),
         'cashflow_low': float(data.get('cashflow').split('-')[0]),
         'cashflow_high': float(data.get('cashflow').split('-')[1]),
         'ask_price_low': float(data.get('ask_price').split('-')[0]),
@@ -49,15 +49,14 @@ def _map_data_to_deal_box(data: dict) -> dict:
         'advantages': data.get('advantages').split(';'),
         'multiple_low': float(data.get('multiple').split('-')[0]),
         'multiple_high': float(data.get('multiple').split('-')[1]),
+        'geography': data.get('geography').split(';')
     }
 
 
 @actions.route('/add_deal_box', methods=['POST'])
 def add_deal_box():
     data = request.get_json()
-    print(data)
-    print(type(data))
-    adjusted_data = _map_data_to_deal_box(data)
+    adjusted_data = _map_data_to_deal_box(data[0])
     required_fields = (
         'name', 
         'valuation_low', 
