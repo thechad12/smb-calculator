@@ -80,3 +80,14 @@ def get_deal_boxes() -> list:
     deal_boxes = db.session.query(DealBox).all()
     return [deal_box.serialize for deal_box in deal_boxes]
 
+
+def get_business(business_uid: str) -> dict:
+    converted = uuid.UUID(business_uid)
+    business = db.session.query(Business).filter_by(
+        Business.uid == converted
+    ).one()
+    if business:
+        return business.serialize
+    else:
+        return {}
+
