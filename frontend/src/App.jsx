@@ -15,6 +15,7 @@ import DealTable from './components/tables/DealTable';
 import NewDealBox from './components/forms/NewDealBox';
 import NewMetrics from './components/forms/NewMetrics';
 import NewBusiness from './components/forms/NewBusiness';
+import BusinessProfile from './components/pages/BusinessProfile';
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,12 @@ const router = createBrowserRouter([
         path: "/new-metrics",
         element: (
             <NewMetrics />
+        )
+    },
+    {
+        path: "/business/:id",
+        element: (
+            <BusinessProfile />
         )
     },
 ]);
