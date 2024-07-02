@@ -25,3 +25,19 @@ export const insertNewRow = columns => {
     newData.push(dataset);
     return newData;
 };
+
+const mapCurrencyToSymbol = currency => {
+    const map = {
+        'USD': '$',
+        'CAD': 'CAD',
+        'Euro': '€',
+        'AUD': 'AUD',
+        'GBP': '£',
+    }
+}
+
+
+export const money = (value, currency) => {
+    const newValue = value.toFixed(2).toString();
+    return `${mapCurrencyToSymbol(currency)}${newValue}`
+}
