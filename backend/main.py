@@ -13,8 +13,16 @@ db = SQLAlchemy(app)
 from database.models.business import Business
 from database.models.metrics import Metrics
 from database.models.deal_box import DealBox
+from database.models.portfolio import Portfolio
+from database.models.portfolio_business import PortfolioBusiness
 
-target_metadata = [Business, Metrics, DealBox]
+target_metadata = [
+    Business, 
+    Metrics, 
+    DealBox, 
+    Portfolio, 
+    PortfolioBusiness
+]
 migrate = Migrate(app, db)
 
 from routes.data import bp
