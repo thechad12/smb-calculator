@@ -1,4 +1,5 @@
-
+import React from "react";
+import { Link } from "react-router-dom";
 
 // Insert a blank row so this data can be edited and added into backend updates
 export const blankRowFromEmptyData = (columns,data) => {
@@ -39,5 +40,12 @@ const mapCurrencyToSymbol = currency => {
 
 export const money = (value, currency) => {
     const newValue = value.toFixed(2).toString();
-    return `${mapCurrencyToSymbol(currency)}${newValue}`
+    return `${mapCurrencyToSymbol(currency)} ${newValue}`
+}
+
+// Generate link from entity to profile page
+export const link = (uid, entity, name) => {
+    return (
+        <Link to={`${entity}/${uid}`}>{name}</Link>
+    )
 }

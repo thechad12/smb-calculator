@@ -72,7 +72,7 @@ const DealTable = props => {
             <Toolbar/>
             <TableContainer>
                 <Table variant='striped'>
-                    <TableCaption>Current Employee List</TableCaption>
+                    <TableCaption>Diligence on Businesses</TableCaption>
                     <Thead>
                         <Tr>
                             <Th>Metrics</Th>

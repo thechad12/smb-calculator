@@ -11,10 +11,12 @@ import {
     Route,
     Link,
 } from 'react-router-dom';
+import Portfolio from './components/pages/Portfolio';
 import DealTable from './components/tables/DealTable';
 import NewDealBox from './components/forms/NewDealBox';
 import NewMetrics from './components/forms/NewMetrics';
 import NewBusiness from './components/forms/NewBusiness';
+import BusinessTable from './components/tables/BusinessTable';
 import BusinessProfile from './components/pages/BusinessProfile';
 
 const router = createBrowserRouter([
@@ -49,9 +51,21 @@ const router = createBrowserRouter([
         )
     },
     {
+        path: "/businesses",
+        element: (
+            <BusinessTable />
+        )
+    },
+    {
         path: "/business/:id",
         element: (
             <BusinessProfile />
+        )
+    },
+    {
+        path: "/portfolio/:id",
+        element: (
+            <Portfolio />
         )
     },
 ]);
