@@ -25,42 +25,49 @@ const Toolbar = props => {
                     w='250px'
                     as={ReactRouterLink} 
                     to='/businesses'
-                    textAlign='left'>
+                    textAlign='left'
+                    ml='0.5rem'
+                    mt='1rem'>
                     Main Feed
                 </ChakraLink>
                 <ChakraLink 
                     w='250px'
                     as={ReactRouterLink} 
                     to='/new-business-diligence'
-                    textAlign='left'>
+                    textAlign='left'
+                    ml='0.5rem'>
                     Create Business Diligence
                 </ChakraLink>
                 <ChakraLink 
                     w='250px'
                     textAlign='left'
                     as={ReactRouterLink} 
-                    to='/new-business'>
+                    to='/new-business'
+                    ml='0.5rem'>
                     Create a business
                 </ChakraLink>
                 <ChakraLink 
                     w='250px'
                     textAlign='left'
                     as={ReactRouterLink} 
-                    to='/new-metrics'>
+                    to='/new-metrics'
+                    ml='0.5rem'>
                     Attach Metrics to a Business
                 </ChakraLink>
                 <ChakraLink
                     w='250px'
                     textAlign='left'
                     as={ReactRouterLink} 
-                    to='/business-diligence'>
+                    to='/business-diligence'
+                    ml='0.5rem'>
                     Business Diligence Comparison
                 </ChakraLink>
                 <ChakraLink
                     w='250px'
                     textAlign='left'
                     as={ReactRouterLink} 
-                    to='/business-diligence'>
+                    to='/business-diligence'
+                    ml='0.5rem'>
                     Import Data
                 </ChakraLink>
             </Stack>
