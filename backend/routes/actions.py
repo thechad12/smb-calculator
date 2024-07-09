@@ -13,7 +13,7 @@ actions = Blueprint('actions', __name__)
 def add_business():
     data = request.get_json()
     if isinstance(data, list):
-        data = data[0]
+        data = data[-1]
     required_fields = (
         'name', 
         'location', 
@@ -57,7 +57,7 @@ def _map_data_to_deal_box(data: dict) -> dict:
 def add_deal_box():
     data = request.get_json()
     if isinstance(data, list):
-        data = data[0]
+        data = data[-1]
     adjusted_data = _map_data_to_deal_box(data)
     required_fields = (
         'name', 

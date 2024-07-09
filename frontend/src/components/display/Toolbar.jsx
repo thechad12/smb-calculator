@@ -24,7 +24,7 @@ const Toolbar = props => {
                 <ChakraLink 
                     w='250px'
                     as={ReactRouterLink} 
-                    to='/new-business-diligence'
+                    to='/businesses'
                     textAlign='left'>
                     Main Feed
                 </ChakraLink>

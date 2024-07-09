@@ -7,14 +7,14 @@ const URL = 'http://localhost:8000'
 export const GetData = (endpoint) => {
     const backend_url = `${URL}/${endpoint}`;
     const key = endpoint;
-    const [fetchError, setFetchError] = useState(false);
+    //const [fetchError, setFetchError] = useState(false);
 
-    const { isLoading, error, data } = useQuery(key, () => {
-        fetch(backend_url).then(res => res.json())
-            .catch(e => setFetchError(true))
+    const { status, data, error } = useQuery(key, async () => {
+        const res = await fetch(backend_url);
+        return res.json();
     });
 
-    return { isLoading, error, data, fetchError }; 
+    return { status, error, data }; 
 }
 
 export const UpdateData = (endpoint, params) => {

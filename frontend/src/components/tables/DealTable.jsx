@@ -1,3 +1,4 @@
+import React, {useState, useEffect} from 'react';
 import {
     Table,
     Thead,
@@ -19,7 +20,15 @@ import Toolbar from '../display/Toolbar';
 
 const DealTable = props => {
 
-    const { isLoading, error, data, fetchError } = GetData('data/comp_deal_box');
+    const { status, data, error } = GetData('comp_deal_box');
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (data) {
+            setLoading(false);
+        }
+    }, [data])
 
     const metrics = [
         'Cashflow',
@@ -35,15 +44,20 @@ const DealTable = props => {
         'Multiple',
     ];
 
-    if (isLoading && !data) {
+    if (loading) {
         return (
-            <Spinner size='xl' />
+            <>
+                <Toolbar/>
+                <Spinner size='xl' 
+                    position='absolute'
+                    top='5rem' 
+                    left='45rem'/>
+            </>
         )
     }
 
-    if (error || fetchError) {
+    if (error) {
         console.log(error);
-        console.log(fetchError);
         return (
             <>
                 <Alert status='warning'>
@@ -55,79 +69,69 @@ const DealTable = props => {
         )
     }
 
-    if ((!data && !isLoading) || (!isLoading && data.length == 0)) {
-        return (
-            <>
-            <Alert status='info'>
-                <AlertIcon />
-                <AlertTitle>Info</AlertTitle>
-                <AlertDescription>There is currently no data.</AlertDescription>
-            </Alert>
-        </>
-        )
-    }
-
     return (
         <>
             <Toolbar/>
-            <TableContainer>
-                <Table variant='striped'>
-                    <TableCaption>Diligence on Businesses</TableCaption>
-                    <Thead>
-                        <Tr>
-                            <Th>Metrics</Th>
-                            <Th>Deal Box</Th>
-                            {data.map((item) => {
-                                <Th>{item.biz_name}</Th>
-                            })}
-                        </Tr>
-                        </Thead>
-                        <Tbody>
-                            {metrics.map( metric => {
-                                return (
-                                    <Tr>
-                                        <Td>{metric}</Td>
-                                    </Tr>
-                                )
-                            })}
-                            {data.map((item) => {
-                                if (!item.is_deal_box) {
+            <div className='table-container'>
+                <TableContainer>
+                    <Table variant='striped'>
+                        <TableCaption>Diligence on Businesses</TableCaption>
+                        <Thead>
+                            <Tr>
+                                <Th>Metrics</Th>
+                                <Th>Deal Box</Th>
+                                {data.map((item) => {
+                                    <Th>{item.biz_name}</Th>
+                                })}
+                            </Tr>
+                            </Thead>
+                            <Tbody>
+                                {metrics.map( metric => {
                                     return (
                                         <Tr>
-                                            <Td>{item.cashflow}</Td>
-                                            <Td>{item.ask_price}</Td>
-                                            <Td>{item.gross_revenue}</Td>
-                                            <Td>{item.valuation}</Td>
-                                            <Td>{item.revenue}</Td>
-                                            <Td>{item.sector}</Td>
-                                            <Td>{item.geography}</Td>
-                                            <Td>{item.scale}</Td>
-                                            <Td>{item.advantages}</Td>
-                                            <Td>{item.investor}</Td>
-                                            <Td>{item.multiple}</Td>
+                                            <Td>{metric}</Td>
                                         </Tr>
                                     )
-                                } else {
-                                    return (
-                                        <Tr>
-                                            <Td>{item.cashflow}</Td>
-                                            <Td>{item.ask_price}</Td>
-                                            <Td>{item.revenue}</Td>
-                                            <Td>{item.valuation}</Td>
-                                            <Td>{item.profit}</Td>
-                                            <Td>{item.sector}</Td>
-                                            <Td>{item.geography}</Td>
-                                            <Td>{item.scale}</Td>
-                                            <Td>{item.advantages}</Td>
-                                            <Td>{item.investor}</Td>
-                                            <Td>{item.multiple}</Td>
-                                        </Tr>
-                                    )
-                                }
-                            })}
-                        </Tbody>
-                </Table>
-            </TableContainer>   
+                                })}
+                                {data.map((item) => {
+                                    if (!item.is_deal_box) {
+                                        return (
+                                            <Tr>
+                                                <Td>{item.cashflow}</Td>
+                                                <Td>{item.ask_price}</Td>
+                                                <Td>{item.gross_revenue}</Td>
+                                                <Td>{item.valuation}</Td>
+                                                <Td>{item.revenue}</Td>
+                                                <Td>{item.sector}</Td>
+                                                <Td>{item.geography}</Td>
+                                                <Td>{item.scale}</Td>
+                                                <Td>{item.advantages}</Td>
+                                                <Td>{item.investor}</Td>
+                                                <Td>{item.multiple}</Td>
+                                            </Tr>
+                                        )
+                                    } else {
+                                        return (
+                                            <Tr>
+                                                <Td>{item.cashflow}</Td>
+                                                <Td>{item.ask_price}</Td>
+                                                <Td>{item.revenue}</Td>
+                                                <Td>{item.valuation}</Td>
+                                                <Td>{item.profit}</Td>
+                                                <Td>{item.sector}</Td>
+                                                <Td>{item.geography}</Td>
+                                                <Td>{item.scale}</Td>
+                                                <Td>{item.advantages}</Td>
+                                                <Td>{item.investor}</Td>
+                                                <Td>{item.multiple}</Td>
+                                            </Tr>
+                                        )
+                                    }
+                                })}
+                            </Tbody>
+                    </Table>
+                </TableContainer>
+            </div>  
         </>
     )
 }

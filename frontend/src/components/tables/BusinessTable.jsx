@@ -1,3 +1,4 @@
+import React, {useState, useEffect} from 'react';
 import {
     Table,
     Thead,
@@ -18,19 +19,31 @@ import Toolbar from '../display/Toolbar';
 import {link} from '../../utils/format';
 
 
-const DealTable = props => {
+const BusinessTable = props => {
 
-    const { isLoading, error, data, fetchError } = GetData('data/get_businesses');
+    const { status, data, error } = GetData('get_businesses');
+    const [loading, setLoading] = useState(true);
 
-    if (isLoading && !data) {
+    useEffect(() => {
+        if (data) {
+            setLoading(false);
+        }
+    }, [data])
+
+    if (loading) {
         return (
-            <Spinner size='xl' />
+            <>
+                <Toolbar/>
+                <Spinner size='xl' 
+                    position='absolute'
+                    top='5rem' 
+                    left='45rem'/>
+            </>
         )
     }
 
-    if (error || fetchError) {
+    if (error) {
         console.log(error);
-        console.log(fetchError);
         return (
             <>
                 <Alert status='warning'>
@@ -42,48 +55,38 @@ const DealTable = props => {
         )
     }
 
-    if ((!data && !isLoading) || (!isLoading && data.length == 0)) {
-        return (
-            <>
-            <Alert status='info'>
-                <AlertIcon />
-                <AlertTitle>Info</AlertTitle>
-                <AlertDescription>There is currently no data.</AlertDescription>
-            </Alert>
-        </>
-        )
-    }
-
     return (
         <>
             <Toolbar/>
-            <TableContainer>
-                <Table variant='striped'>
-                    <TableCaption>Businesses</TableCaption>
-                    <Thead>
-                        <Tr>
-                            <Th>Business Name</Th>
-                            <Th>Location</Th>
-                            <Th>Description</Th>
-                            <Th>Business Type</Th>
-                        </Tr>
-                        </Thead>
-                        <Tbody>
-                            {data.map((item) => {
-                                return (
-                                    <Tr>
-                                        <Td>{link(item.uid, 'business', item.name)}</Td>
-                                        <Td>{item.location}</Td>
-                                        <Td>{item.description}</Td>
-                                        <Td>{item.biz_type}</Td>
-                                    </Tr>
-                                )
-                            })}
-                        </Tbody>
-                </Table>
-            </TableContainer>   
+            <div className='table-container'>
+                <TableContainer>
+                    <Table variant='striped'>
+                        <TableCaption>Businesses</TableCaption>
+                        <Thead>
+                            <Tr>
+                                <Th>Business Name</Th>
+                                <Th>Location</Th>
+                                <Th>Description</Th>
+                                <Th>Business Type</Th>
+                            </Tr>
+                            </Thead>
+                            <Tbody>
+                                {data.map((item) => {
+                                    return (
+                                        <Tr>
+                                            <Td>{link(item.uid, 'business', item.name)}</Td>
+                                            <Td>{item.location}</Td>
+                                            <Td>{item.description}</Td>
+                                            <Td>{item.biz_type}</Td>
+                                        </Tr>
+                                    )
+                                })}
+                            </Tbody>
+                    </Table>
+                </TableContainer>
+            </div>
         </>
     )
 }
 
-export default DealTable;
+export default BusinessTable;
