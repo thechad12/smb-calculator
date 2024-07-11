@@ -46,14 +46,6 @@ const Toolbar = props => {
                     ml='0.5rem'>
                     Create a business
                 </ChakraLink>
-                <ChakraLink 
-                    w='250px'
-                    textAlign='left'
-                    as={ReactRouterLink} 
-                    to='/new-metrics'
-                    ml='0.5rem'>
-                    Attach Metrics to a Business
-                </ChakraLink>
                 <ChakraLink
                     w='250px'
                     textAlign='left'

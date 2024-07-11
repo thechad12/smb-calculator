@@ -8,7 +8,7 @@ from collections import defaultdict
 
 
 def _get_biz_metrics(uid) -> dict:
-    result = db.session.query(Metrics).filter_by(
+    result = db.session.query(Metrics).filter(
         Metrics.business_uid == uid
     ).first()
     if result is not None:
@@ -19,7 +19,7 @@ def _get_biz_metrics(uid) -> dict:
 
 
 def _get_deal_box_by_name(str_name) -> dict:
-    result = db.session.query(DealBox).filter_by(
+    result = db.session.query(DealBox).filter(
         DealBox.name == str_name
     ).first()
     if result is not None:
@@ -30,8 +30,7 @@ def _get_deal_box_by_name(str_name) -> dict:
 
 
 def get_business_metrics(business_uid: str) -> dict:
-    converted = uuid.UUID(business_uid)
-    metrics = _get_biz_metrics(converted)
+    metrics = _get_biz_metrics(business_uid)
     return metrics
 
 
@@ -48,11 +47,11 @@ def comp_to_deal_box(
         biz_name: str = None) -> dict:
     box = _get_deal_box_by_name(box_name)
     if biz_uid is None:
-        biz_uid = db.session.query(Business).filter_by(
+        biz_uid = db.session.query(Business).filter(
             Business.name == biz_name
         ).first()
     if biz_name is None:
-        biz_name = db.session.query(Business).filter_by(
+        biz_name = db.session.query(Business).filter(
             Business.uid == biz_uid
         ).first()
     metrics = _get_biz_metrics(biz_uid)
@@ -83,9 +82,8 @@ def get_deal_boxes() -> list:
 
 
 def get_business(business_uid: str) -> dict:
-    converted = uuid.UUID(business_uid)
-    business = db.session.query(Business).filter_by(
-        Business.uid == converted
+    business = db.session.query(Business).filter(
+        Business.uid == business_uid
     ).one()
     if business:
         return business.serialize
