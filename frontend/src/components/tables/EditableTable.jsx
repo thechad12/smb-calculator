@@ -20,6 +20,8 @@ const EditableTable = (props) => {
     const gridRef = useRef();
     const saveEndpoint = props.saveEndpoint;
     const saveText = props.saveText || 'Save Data';
+    const updateText = props.updateText || 'Update Data';
+    const updateEndpoint = props.updateEndpoint;
     const width = props.width || '100%';
     const styleProps = props.styleProps || {};
     const [validationErrors, setValidationErrors] = useState([]);
@@ -53,6 +55,9 @@ const EditableTable = (props) => {
             <div className='table-container'>
                 <Button variant='ghost' onClick={() => saveEndpoint(getRowData())}>
                     {saveText}
+                </Button>
+                <Button variant='ghost' onClick={() => updateEndpoint(getRowData())}>
+                    {updateText}
                 </Button>
                 <Button variant='ghost' onClick={() => addBlankRow(data.length || 0)}>
                     Add New Row

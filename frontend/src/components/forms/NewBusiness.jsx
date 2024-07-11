@@ -64,7 +64,27 @@ function NewBusiness() {
     return responseData;
   };
 
+  const updateData = async (data) => {
+    const response = await fetch(`${DATA_BASE_URL}/update_businesses`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    const responseData = await response.json();
+    return responseData;
+  };
+
   const { mutate: createBusinessMutation, isLoading: isCreatingBusiness } = useMutation(createBusiness, {
+    onSuccess: () => {
+      setSuccess(true);
+      fetchBusinesses();
+    }
+  });
+
+  const { mutate: updateBusinessMutation, isLoading: isUpdatingBusinesses } = useMutation(updateData, {
     onSuccess: () => {
       setSuccess(true);
       fetchBusinesses();
@@ -94,6 +114,7 @@ function NewBusiness() {
       <EditableTable 
         columns={columns}
         saveEndpoint={createBusinessMutation}
+        updateEndpoint={updateBusinessMutation}
         width="55rem"
         data={data} />
       </>

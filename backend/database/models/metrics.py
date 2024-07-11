@@ -31,6 +31,25 @@ class Metrics(db.Model):
         return self.__dict__
     
 
+    @staticmethod
+    def empty_data():
+        return {
+            'business_uid': '',
+            'cashflow': '',
+            'ask_price': '',
+            'gross_revenue': '',
+            'ebitda': '',
+            'valuation': '',
+            'sector': '',
+            'revenue': '',
+            'geography': '',
+            'scale': '',
+            'advantages': '',
+            'investor': '',
+            'multiple': ''
+        }
+    
+
     @property
     def serialize(self):
         return {

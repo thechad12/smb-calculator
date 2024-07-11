@@ -13,9 +13,7 @@ def _get_biz_metrics(uid) -> dict:
     ).first()
     if result is not None:
         return result.serialize
-    return {
-        'results': 0
-    }
+    return Metrics.empty_data()
 
 
 def _get_deal_box_by_name(str_name) -> dict:
@@ -36,9 +34,12 @@ def get_business_metrics(business_uid: str) -> dict:
 
 
 def get_all_businesses() -> list:
-    businesses = [biz.uid for biz in db.session.query(Business).all()]
-    metric_data = [get_business_metrics(biz) for biz in businesses]
-    return metric_data
+    data = []
+    businesses = [biz for biz in db.session.query(Business).all()]
+    for biz in businesses:
+        metric_data = _get_biz_metrics(biz.uid)
+        data.append({**biz.serialize, **metric_data})
+    return data
 
 
 def comp_to_deal_box(

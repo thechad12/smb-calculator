@@ -20,6 +20,7 @@ class Business(db.Model):
     @property
     def serialize(self):
         return {
+            'uid': str(self.uid),
             'name': self.name,
             'location': self.location,
             'description': self.description,

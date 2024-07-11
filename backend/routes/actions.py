@@ -9,6 +9,23 @@ from routes.utils import validate_required_fields
 
 actions = Blueprint('actions', __name__)
 
+@actions.route('/update_businesses', methods=['POST'])
+def update_businesses():
+    data = request.get_json()
+    for row in data:
+        business = db.session.query(Business).filter(
+            Business.uid == business.get('uid')
+        ).first()
+        if business:
+            for key, value in row.__dict__:
+                if hasattr(business, key):
+                    setattr(business, value)
+            db.session.add(business)
+    return jsonify({'message': 'Businesses updated successfully'}), 201
+
+
+
+
 @actions.route('/add_business', methods=['POST'])
 def add_business():
     data = request.get_json()
