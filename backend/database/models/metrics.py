@@ -29,3 +29,23 @@ class Metrics(db.Model):
     @property
     def as_dict(self):
         return self.__dict__
+    
+
+    @property
+    def serialize(self):
+        return {
+            'uid': self.uid,
+            'business_uid': self.business_uid,
+            'cashflow': self.cashflow,
+            'ask_price': self.ask_price,
+            'gross_revenue': self.gross_revenue,
+            'ebitda': self.ebitda,
+            'valuation': self.valuation,
+            'sector': self.sector,
+            'revenue': self.revenue,
+            'geography': self.geography,
+            'scale': self.scale,
+            'advantages': list(self.advantages),
+            'investor': self.investor,
+            'multiple': self.multiple
+        }

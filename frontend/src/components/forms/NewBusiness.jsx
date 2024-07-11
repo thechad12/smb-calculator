@@ -23,6 +23,15 @@ function NewBusiness() {
     {headerName: 'Location', field: 'location', editable: true},
     {headerName: 'Business Type', field: 'biz_type', editable: true},
     {headerName: 'Description', field: 'description', editable: true},
+    {headerName: 'Cashflow', field: 'cashflow', editable: true},
+    {headerName: 'Ask Price', field: 'ask_price', editable: true},
+    {headerName: 'Gross Revenue', field: 'gross_revenue', editable: true},
+    {headerName: 'EBITDA', field: 'ebitda', editable: true},
+    {headerName: 'Valuation', field: 'valuation', editable: true},
+    {headerName: 'Sector', field: 'sector', editable: true},
+    {headerName: 'Geography', field: 'geography', editable: true},
+    {headerName: 'Advantages', field: 'advantages', editable: true},
+    {headerName: 'Multiple', field: 'multiple', editable: true},
   ]);
 
   const {

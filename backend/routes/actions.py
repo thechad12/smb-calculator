@@ -30,6 +30,25 @@ def add_business():
     )
     db.session.add(new_business)
     db.session.commit()
+    
+    biz_uid = new_business.uid
+    new_metrics = Metrics(
+        business_uid=biz_uid,
+        cashflow=data.get('cashflow'),
+        ask_price=data.get('ask_price'),
+        gross_revenue=data.get('gross_revenue'),
+        ebitda=data.get('ebitda'),
+        valuation=data.get('valuation'),
+        revenue=data.get('revenue'),
+        sector=data.get('sector'),
+        geography=data.get('geography'),
+        scale=data.get('scale'),
+        advantages=data.get('advantages'),
+        investor=data.get('investor'),
+        multiple=data.get('multiple')
+    )
+    db.session.add(new_metrics)
+    db.session.commit()
 
     return jsonify({'message': 'Business added successfully'}), 201
 

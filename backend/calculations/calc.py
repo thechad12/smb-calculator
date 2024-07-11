@@ -12,7 +12,7 @@ def _get_biz_metrics(uid) -> dict:
         Metrics.business_uid == uid
     ).first()
     if result is not None:
-        return result.as_dict
+        return result.serialize
     return {
         'results': 0
     }
@@ -37,8 +37,9 @@ def get_business_metrics(business_uid: str) -> dict:
 
 
 def get_all_businesses() -> list:
-    results = db.session.query(Business).all()
-    return [result.serialize for result in results]
+    businesses = [biz.uid for biz in db.session.query(Business).all()]
+    metric_data = [get_business_metrics(biz) for biz in businesses]
+    return metric_data
 
 
 def comp_to_deal_box(
