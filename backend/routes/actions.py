@@ -14,13 +14,19 @@ def update_businesses():
     data = request.get_json()
     for row in data:
         business = db.session.query(Business).filter(
-            Business.uid == business.get('uid')
+            Business.uid == row.get('uid')
         ).first()
         if business:
-            for key, value in row.__dict__:
+            for key, value in row.items():
                 if hasattr(business, key):
-                    setattr(business, value)
-            db.session.add(business)
+                    setattr(business, key, value)
+            try:
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                print("there was an exception on committing in update_businesses: %s" % e)
+                continue
+
     return jsonify({'message': 'Businesses updated successfully'}), 201
 
 
