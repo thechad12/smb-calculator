@@ -53,8 +53,8 @@ class Metrics(db.Model):
     @property
     def serialize(self):
         return {
-            'uid': self.uid,
-            'business_uid': self.business_uid,
+            'uid': str(self.uid),
+            'business_uid': str(self.business_uid),
             'cashflow': self.cashflow,
             'ask_price': self.ask_price,
             'gross_revenue': self.gross_revenue,

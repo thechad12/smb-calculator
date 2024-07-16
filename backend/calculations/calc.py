@@ -11,6 +11,9 @@ def _get_biz_metrics(uid) -> dict:
     result = db.session.query(Metrics).filter(
         Metrics.business_uid == uid
     ).first()
+    data = db.session.query(Metrics).all()
+    print([row for row in data])
+    print(result)
     if result is not None:
         return result.serialize
     return Metrics.empty_data()
@@ -38,6 +41,7 @@ def get_all_businesses() -> list:
     businesses = [biz for biz in db.session.query(Business).all()]
     for biz in businesses:
         metric_data = _get_biz_metrics(biz.uid)
+        print(metric_data)
         data.append({**biz.serialize, **metric_data})
     return data
 

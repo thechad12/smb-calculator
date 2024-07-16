@@ -32,6 +32,7 @@ function NewBusiness() {
     {headerName: 'Geography', field: 'geography', editable: true},
     {headerName: 'Advantages', field: 'advantages', editable: true},
     {headerName: 'Multiple', field: 'multiple', editable: true},
+    {headerName: 'Investor?', field: 'investor', editable: true},
   ]);
 
   const {

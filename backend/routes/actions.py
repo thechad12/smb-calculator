@@ -16,12 +16,45 @@ def update_businesses():
         business = db.session.query(Business).filter(
             Business.uid == row.get('uid')
         ).first()
-        if business:
-            for key, value in row.items():
-                if hasattr(business, key):
-                    setattr(business, key, value)
+        metrics = db.session.query(Metrics).filter(
+            Metrics.business_uid == row.get('uid')
+        ).first()
+
+        investor = True
+
+        if not metrics:
+            metrics = Metrics(
+                business_uid=row.get('uid'),
+                cashflow=row.get('cashflow'),
+                ask_price=row.get('ask_price'),
+                gross_revenue=row.get('gross_revenue'),
+                revenue=row.get('gross_revenue'),
+                ebitda=row.get('ebitda'),
+                valuation=row.get('valuation'),
+                sector=row.get('sector'),
+                geography=row.get('geography'),
+                scale=1,
+                advantages=row.get('advantages'),
+                investor=investor,
+                multiple=row.get('multiple')
+            )
+            db.session.add(metrics)
             try:
                 db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                print("there was an exception on committing in update_businesses: %s" % e)
+
+        if business:
+            for key, value in row.items():
+                if key != 'uid':
+                    if hasattr(business, key):
+                        setattr(business, key, value)
+                    if hasattr(metrics, key):
+                        setattr(metrics, key, value)
+            try:
+                db.session.commit()
+                print("committed to db")
             except Exception as e:
                 db.session.rollback()
                 print("there was an exception on committing in update_businesses: %s" % e)
