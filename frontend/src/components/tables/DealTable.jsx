@@ -28,7 +28,7 @@ const DealTable = props => {
         if (data) {
             setLoading(false);
         }
-    }, [data])
+    }, [data]);
 
     const metrics = [
         'Cashflow',

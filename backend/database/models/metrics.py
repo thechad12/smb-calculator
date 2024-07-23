@@ -66,5 +66,6 @@ class Metrics(db.Model):
             'scale': self.scale,
             'advantages': list(self.advantages),
             'investor': self.investor,
-            'multiple': self.multiple
+            'multiple': self.multiple,
+            'is_deal_box': False,
         }

@@ -49,4 +49,5 @@ class DealBox(db.Model):
             'scale': self.scale,
             'advantages': self.advantages,
             'multiple': f'{str(self.multiple_low)} - {str(self.multiple_high)}',
+            'is_deal_box': True,
         }

@@ -4,7 +4,7 @@ import {useQuery, useMutation} from 'react-query';
 
 const URL = 'http://localhost:8000'
 
-export const GetData = (endpoint) => {
+export const GetData = (endpoint, params={}) => {
     const backend_url = `${URL}/${endpoint}`;
     const key = endpoint;
     //const [fetchError, setFetchError] = useState(false);

@@ -4,18 +4,17 @@ from typing import Union
 
 def get_json():
     """
-    get request json data
+    Get request JSON data
     """
-    if hasattr(request, 'json') and request.json is not None:
-        return request.json
-    if hasattr(request, 'data') and request.data is not None:
+    if request.is_json:
+        return request.get_json()
+    if request.data:
         return json.loads(request.data)
-    return dict()
-
+    return {}
 
 def get_params():
     """
-    helper to get params from a request
+    Helper to get params from a request
     """
     if not g.get('params'):
         params = get_json()

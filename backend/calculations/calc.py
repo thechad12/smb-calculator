@@ -11,23 +11,21 @@ def _get_biz_metrics(uid) -> dict:
     result = db.session.query(Metrics).filter(
         Metrics.business_uid == uid
     ).first()
-    data = db.session.query(Metrics).all()
-    print([row for row in data])
-    print(result)
     if result is not None:
         return result.serialize
     return Metrics.empty_data()
 
 
-def _get_deal_box_by_name(str_name) -> dict:
-    result = db.session.query(DealBox).filter(
-        DealBox.name == str_name
-    ).first()
+def _get_deal_box_by_name(str_name: str=None) -> dict:
+    if str_name:
+        result = db.session.query(DealBox).filter(
+            DealBox.name == str_name
+        ).first()
+    else:
+        result = db.session.query(DealBox).first()
     if result is not None:
         return result.serialize
-    return {
-        'results': 0
-    }
+    return None
 
 
 def get_business_metrics(business_uid: str) -> dict:
@@ -41,7 +39,6 @@ def get_all_businesses() -> list:
     businesses = [biz for biz in db.session.query(Business).all()]
     for biz in businesses:
         metric_data = _get_biz_metrics(biz.uid)
-        print(metric_data)
         data.append({**biz.serialize, **metric_data})
     return data
 
@@ -50,7 +47,7 @@ def comp_to_deal_box(
         box_name: str, 
         biz_uid: uuid.UUID = None, 
         biz_name: str = None) -> dict:
-    box = _get_deal_box_by_name(box_name)
+    box = _get_deal_box_by_name(str_name=box_name)
     if biz_uid is None:
         biz_uid = db.session.query(Business).filter(
             Business.name == biz_name
@@ -78,7 +75,7 @@ def deal_boxes(box_name: str) -> dict:
         data[biz.name] = metrics
         data[biz.name]['is_deal_box'] = False
         data[biz.name]['business_name'] = biz.name
-    return data
+    return list(data)
 
 
 def get_deal_boxes() -> list:
