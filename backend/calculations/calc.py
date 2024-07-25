@@ -13,7 +13,7 @@ def _get_biz_metrics(uid) -> dict:
     ).first()
     if result is not None:
         return result.serialize
-    return Metrics.empty_data()
+    return None
 
 
 def _get_deal_box_by_name(str_name: str=None) -> dict:
@@ -67,15 +67,17 @@ def comp_to_deal_box(
 def deal_boxes(box_name: str) -> dict:
     businesses = db.session.query(Business).all()
     deal_box = _get_deal_box_by_name(box_name)
-    data = defaultdict()
-    data['deal_box'] = deal_box
-    data['deal_box']['is_deal_box'] = True
+    deal_box_data = {}
+    deal_box_data = deal_box
+    business_data = []
     for biz in businesses:
         metrics = _get_biz_metrics(biz.uid)
-        data[biz.name] = metrics
-        data[biz.name]['is_deal_box'] = False
-        data[biz.name]['business_name'] = biz.name
-    return list(data)
+        if metrics is not None:
+            biz_data = {}
+            for key, value in metrics.items():
+                biz_data[key] = value
+            business_data.append(biz_data)
+    return [deal_box_data, {'businesses': business_data}]
 
 
 def get_deal_boxes() -> list:

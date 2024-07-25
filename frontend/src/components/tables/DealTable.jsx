@@ -81,7 +81,15 @@ const DealTable = props => {
                                 <Th>Metrics</Th>
                                 <Th>Deal Box</Th>
                                 {data.map((item) => {
-                                    <Th>{item.biz_name}</Th>
+                                    {item?.businesses.map((biz) => {
+                                            if (!biz.is_deal_box) {
+                                                console.log("not deal box", biz);
+                                                return(
+                                                    <Th>{biz.business_name}</Th>
+                                                )
+                                            }
+                                        })
+                                    }
                                 })}
                             </Tr>
                             </Thead>
