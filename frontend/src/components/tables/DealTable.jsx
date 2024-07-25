@@ -81,14 +81,13 @@ const DealTable = props => {
                                 <Th>Metrics</Th>
                                 <Th>Deal Box</Th>
                                 {data.map((item) => {
-                                    {item?.businesses.map((biz) => {
-                                            if (!biz.is_deal_box) {
-                                                console.log("not deal box", biz);
+                                    if (item.businesses) {
+                                        {item.businesses.map(biz => {
                                                 return(
                                                     <Th>{biz.business_name}</Th>
                                                 )
                                             }
-                                        })
+                                        )}
                                     }
                                 })}
                             </Tr>
@@ -102,7 +101,7 @@ const DealTable = props => {
                                     )
                                 })}
                                 {data.map((item) => {
-                                    if (!item.is_deal_box) {
+                                    if (item.is_deal_box) {
                                         return (
                                             <Tr>
                                                 <Td>{item.cashflow}</Td>
@@ -119,21 +118,25 @@ const DealTable = props => {
                                             </Tr>
                                         )
                                     } else {
-                                        return (
-                                            <Tr>
-                                                <Td>{item.cashflow}</Td>
-                                                <Td>{item.ask_price}</Td>
-                                                <Td>{item.revenue}</Td>
-                                                <Td>{item.valuation}</Td>
-                                                <Td>{item.profit}</Td>
-                                                <Td>{item.sector}</Td>
-                                                <Td>{item.geography}</Td>
-                                                <Td>{item.scale}</Td>
-                                                <Td>{item.advantages}</Td>
-                                                <Td>{item.investor}</Td>
-                                                <Td>{item.multiple}</Td>
-                                            </Tr>
-                                        )
+                                        if (item.businesses) {
+                                            {item.businesses.map(biz => {
+                                                return (
+                                                    <Tr>
+                                                        <Td>{biz.cashflow}</Td>
+                                                        <Td>{biz.ask_price}</Td>
+                                                        <Td>{biz.revenue}</Td>
+                                                        <Td>{biz.valuation}</Td>
+                                                        <Td>{biz.profit}</Td>
+                                                        <Td>{biz.sector}</Td>
+                                                        <Td>{biz.geography}</Td>
+                                                        <Td>{biz.scale}</Td>
+                                                        <Td>{biz.advantages}</Td>
+                                                        <Td>{biz.investor}</Td>
+                                                        <Td>{biz.multiple}</Td>
+                                                    </Tr>
+                                                )
+                                            })}
+                                        }
                                     }
                                 })}
                             </Tbody>

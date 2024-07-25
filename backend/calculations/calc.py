@@ -76,6 +76,7 @@ def deal_boxes(box_name: str) -> dict:
             biz_data = {}
             for key, value in metrics.items():
                 biz_data[key] = value
+            biz_data['business_name'] = biz.name
             business_data.append(biz_data)
     return [deal_box_data, {'businesses': business_data}]
 
