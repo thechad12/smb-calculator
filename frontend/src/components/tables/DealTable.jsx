@@ -33,7 +33,6 @@ const DealTable = props => {
     const metrics = [
         'Cashflow',
         'Ask Price',
-        'Gross Revenue',
         'Valuation',
         'Revenue',
         'Sector',
@@ -42,6 +41,19 @@ const DealTable = props => {
         'Advantages',
         'Investor or Operator',
         'Multiple',
+    ];
+
+    const keys = [
+        'cashflow',
+        'ask_price',
+        'valuation',
+        'revenue',
+        'sector',
+        'geography',
+        'scale',
+        'advantages',
+        'investor',
+        'multiple',
     ];
 
     if (loading) {
@@ -102,43 +114,28 @@ const DealTable = props => {
                                 })}
                                 {data.map((item) => {
                                     if (item.is_deal_box) {
-                                        return (
-                                            <Tr>
-                                                <Td>{item.cashflow}</Td>
-                                                <Td>{item.ask_price}</Td>
-                                                <Td>{item.gross_revenue}</Td>
-                                                <Td>{item.valuation}</Td>
-                                                <Td>{item.revenue}</Td>
-                                                <Td>{item.sector}</Td>
-                                                <Td>{item.geography}</Td>
-                                                <Td>{item.scale}</Td>
-                                                <Td>{item.advantages}</Td>
-                                                <Td>{item.investor}</Td>
-                                                <Td>{item.multiple}</Td>
-                                            </Tr>
-                                        )
-                                    } else {
-                                        if (item.businesses) {
-                                            {item.businesses.map(biz => {
-                                                return (
-                                                    <Tr>
-                                                        <Td>{biz.cashflow}</Td>
-                                                        <Td>{biz.ask_price}</Td>
-                                                        <Td>{biz.revenue}</Td>
-                                                        <Td>{biz.valuation}</Td>
-                                                        <Td>{biz.profit}</Td>
-                                                        <Td>{biz.sector}</Td>
-                                                        <Td>{biz.geography}</Td>
-                                                        <Td>{biz.scale}</Td>
-                                                        <Td>{biz.advantages}</Td>
-                                                        <Td>{biz.investor}</Td>
-                                                        <Td>{biz.multiple}</Td>
-                                                    </Tr>
-                                                )
-                                            })}
-                                        }
+                                        {keys.map(key => {
+                                            return (
+                                                <Tr>
+                                                    <Td>{item[key]}</Td>
+                                                </Tr>
+                                            )
+                                        })}
                                     }
                                 })}
+                                {data.map(item => {
+                                        if (item.businesses) {
+                                            {item.businesses.map(biz => {
+                                                {keys.map(key => {
+                                                    return (
+                                                        <Tr>
+                                                            <Td>{biz[key]}</Td>
+                                                        </Tr>
+                                                    )})}
+                                                })}}
+                                            })
+                                        }
+                        
                             </Tbody>
                     </Table>
                 </TableContainer>
