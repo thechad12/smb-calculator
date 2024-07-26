@@ -90,52 +90,19 @@ const DealTable = props => {
                         <TableCaption>Diligence on Businesses</TableCaption>
                         <Thead>
                             <Tr>
-                                <Th>Metrics</Th>
-                                <Th>Deal Box</Th>
-                                {data.map((item) => {
-                                    if (item.businesses) {
-                                        {item.businesses.map(biz => {
-                                                return(
-                                                    <Th>{biz.business_name}</Th>
-                                                )
-                                            }
-                                        )}
-                                    }
-                                })}
+                                {data.headers.map(header => (
+                                    <Th>{header}</Th>
+                                ))}
                             </Tr>
                             </Thead>
                             <Tbody>
-                                {metrics.map( metric => {
-                                    return (
-                                        <Tr>
-                                            <Td>{metric}</Td>
-                                        </Tr>
-                                    )
-                                })}
-                                {data.map((item) => {
-                                    if (item.is_deal_box) {
-                                        {keys.map(key => {
-                                            return (
-                                                <Tr>
-                                                    <Td>{item[key]}</Td>
-                                                </Tr>
-                                            )
-                                        })}
-                                    }
-                                })}
-                                {data.map(item => {
-                                        if (item.businesses) {
-                                            {item.businesses.map(biz => {
-                                                {keys.map(key => {
-                                                    return (
-                                                        <Tr>
-                                                            <Td>{biz[key]}</Td>
-                                                        </Tr>
-                                                    )})}
-                                                })}}
-                                            })
-                                        }
-                        
+                                {data.row_data.map(row => (
+                                    <Tr>
+                                        {row.map(item => (
+                                            <Td>{item}</Td>
+                                        ))}
+                                    </Tr>
+                                ))}
                             </Tbody>
                     </Table>
                 </TableContainer>

@@ -96,7 +96,7 @@ def _formatted_deal_data(deal_data):
         rows.append(row)
 
     # Combine headers and rows
-    formatted_data = [headers] + rows
+    formatted_data = {'headers':headers, 'row_data': rows}
     return formatted_data
 
 
