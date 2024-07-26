@@ -64,6 +64,43 @@ def comp_to_deal_box(
     return data
 
 
+def _formatted_deal_data(deal_data):
+    # Mapping of metrics to their keys
+    metric_data = {
+        'Cashflow': 'cashflow',
+        'Ask Price': 'ask_price',
+        'Valuation': 'valuation',
+        'Revenue': 'revenue',
+        'Sector': 'sector',
+        'Geography': 'geography',
+        'Scale': 'scale',
+        'Advantages': 'advantages',
+        'Investor or Operator': 'investor',
+        'Multiple': 'multiple',
+    }
+
+    deal_box = deal_data[0]
+    businesses = deal_data[1].get('businesses', [])
+
+    # Create headers
+    headers = ['Metric', 'Deal Box']
+    headers.extend(biz['business_name'] for biz in businesses)
+
+    # Create rows
+    rows = []
+    for metric, key in metric_data.items():
+        row = [metric]
+        row.append(deal_box.get(key, 'N/A'))
+        for biz in businesses:
+            row.append(biz.get(key, 'N/A'))
+        rows.append(row)
+
+    # Combine headers and rows
+    formatted_data = [headers] + rows
+    return formatted_data
+
+
+
 def deal_boxes(box_name: str) -> dict:
     businesses = db.session.query(Business).all()
     deal_box = _get_deal_box_by_name(box_name)
@@ -78,7 +115,8 @@ def deal_boxes(box_name: str) -> dict:
                 biz_data[key] = value
             biz_data['business_name'] = biz.name
             business_data.append(biz_data)
-    return [deal_box_data, {'businesses': business_data}]
+    data = [deal_box_data, {'businesses': business_data}]
+    return _formatted_deal_data(data)
 
 
 def get_deal_boxes() -> list:
