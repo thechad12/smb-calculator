@@ -58,8 +58,13 @@ const BusinessTable = props => {
     return (
         <>
             <Toolbar/>
-            <div className='table-container'>
-                <TableContainer>
+                <TableContainer
+                    overflow='scroll'
+                    overflowY='scroll'
+                    w='75vw' 
+                    position='absolute'
+                    top='5rem'
+                    ml='20rem'>
                     <Table variant='striped'>
                         <TableCaption>Businesses</TableCaption>
                         <Thead>
@@ -84,7 +89,6 @@ const BusinessTable = props => {
                             </Tbody>
                     </Table>
                 </TableContainer>
-            </div>
         </>
     )
 }

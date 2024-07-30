@@ -75,7 +75,7 @@ const DealTable = props => {
                 <Alert status='warning'>
                     <AlertIcon />
                     <AlertTitle>Warning</AlertTitle>
-                    <AlertDescription>There was an issue retrieving data</AlertDescription>
+                    <AlertDescription>There was an issue retrieving diligence data</AlertDescription>
                 </Alert>
             </>
         )
@@ -84,8 +84,13 @@ const DealTable = props => {
     return (
         <>
             <Toolbar/>
-            <div className='table-container'>
-                <TableContainer>
+                <TableContainer 
+                    overflow='scroll'
+                    overflowY='scroll'
+                    w='75vw' 
+                    position='absolute'
+                    top='5rem'
+                    ml='20rem'>
                     <Table variant='striped'>
                         <TableCaption>Diligence on Businesses</TableCaption>
                         <Thead>
@@ -99,14 +104,13 @@ const DealTable = props => {
                                 {data.row_data.map(row => (
                                     <Tr>
                                         {row.map(item => (
-                                            <Td>{item}</Td>
+                                            <Td w='auto'>{item}</Td>
                                         ))}
                                     </Tr>
                                 ))}
                             </Tbody>
                     </Table>
                 </TableContainer>
-            </div>  
         </>
     )
 }

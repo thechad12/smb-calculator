@@ -1,92 +1,72 @@
-
-from aiolimiter import AsyncLimiter
-from urllib.parse import urlparse
-import asyncio
 import aiohttp
-import logging
-import time
-from pprint import pprint as pp
-import random
-import aiofiles
+from bs4 import BeautifulSoup
+import asyncio
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker
+from database.models.business import Business
+from config import Config
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-log_handler = logging.StreamHandler()
+DATABASE_URL = Config.SQLALCHEMY_DATABASE_URI
+engine = create_async_engine(DATABASE_URL, echo=True)
+AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
-async def HTTPClientDownloader(url, settings, state, biz_type=None):
-    host = urlparse(url).hostname
-    max_tcp_connections = settings['max_tcp_connections']
+async def parse_bizbuysell(soup):
+    data = {}
+    data['cashflow'] = soup.select_one('.cashflow-selector').text.strip()
+    data['sde'] = soup.select_one('.sde-selector').text.strip()
+    data['revenue'] = soup.select_one('.revenue-selector').text.strip()
+    data['profit_margin'] = soup.select_one('.profit-margin-selector').text.strip()
+    data['multiple'] = soup.select_one('.multiple-selector').text.strip()
+    data['location'] = soup.select_one('.location-selector').text.strip()
+    return data
 
-    async with settings['rate_per_host'][host]["limit"]:
-        connector = aiohttp.TCPConnector(limit=max_tcp_connections)
+async def parse_flippa(soup):
+    data = {}
+    data['cashflow'] = soup.select_one('.cashflow-selector').text.strip()
+    data['sde'] = soup.select_one('.sde-selector').text.strip()
+    data['revenue'] = soup.select_one('.revenue-selector').text.strip()
+    data['profit_margin'] = soup.select_one('.profit-margin-selector').text.strip()
+    data['multiple'] = soup.select_one('.multiple-selector').text.strip()
+    data['location'] = soup.select_one('.location-selector').text.strip()
+    return data
 
-        async with aiohttp.ClientSession(connector=connector) as session:
-            start_time = time.perf_counter()  # Start timer
-            safari_agents = [
-                'Safari/17612.3.14.1.6 CFNetwork/1327.0.4 Darwin/21.2.0',
-            ]
-            user_agent = random.choice(safari_agents)
+async def parse_apollo(soup):
+    data = {}
+    data['cashflow'] = soup.select_one('.cashflow-selector').text.strip()
+    data['sde'] = soup.select_one('.sde-selector').text.strip()
+    data['revenue'] = soup.select_one('.revenue-selector').text.strip()
+    data['profit_margin'] = soup.select_one('.profit-margin-selector').text.strip()
+    data['multiple'] = soup.select_one('.multiple-selector').text.strip()
+    data['location'] = soup.select_one('.location-selector').text.strip()
+    return data
 
-            headers = {
-                'User-Agent': user_agent
-            }
+async def scrape_business_info(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            response_text = await response.text()
+            soup = BeautifulSoup(response_text, 'html.parser')
 
-            proxy = None
-            html = None
-            async with session.get(url, proxy=proxy, headers=headers) as response:
-                html = await response.text()
-                end_time = time.perf_counter()  # Stop timer
-                elapsed_time = end_time - start_time  # Calculate time taken to get response
-                status = response.status
+            if 'bizbuysell.com' in url:
+                data = await parse_bizbuysell(soup)
+            elif 'flippa.com' in url:
+                data = await parse_flippa(soup)
+            elif 'apollo.io' in url:
+                data = await parse_apollo(soup)
+            else:
+                raise ValueError("Unsupported site")
 
-                logger.info(
-                    msg=f"status={status}, url={url}",
-                    extra={
-                        "elapsed_time": f"{elapsed_time:4f}",
-                    }
-                )
+            async with AsyncSessionLocal() as session:
+                async with session.begin():
+                    business = Business(
+                        name='Business Name',
+                        cashflow=data['cashflow'],
+                        sde=data['sde'],
+                        revenue=data['revenue'],
+                        profit_margin=data['profit_margin'],
+                        multiple=data['multiple'],
+                        location=data['location']
+                    )
+                    session.add(business)
+                await session.commit()
 
-                dir = "./data"
-                idx = url.split(
-                    f"https://www.bizbuysell.com/{state}-businesses-for-sale/")[-1]
-                loc = f"{dir}/bizbuysell-{state}-{idx}.html"
-
-                async with aiofiles.open(loc, mode="w")  as fd:
-                    await fd.write(html)
-
-
-async def dispatch(url, settings, state, biz_type=None):
-    await HTTPClientDownloader(url, settings, state, biz_type=biz_type)
-
-async def main(start_urls, settings, state, biz_type=None):
-    tasks = []
-    for url in start_urls:
-        task = asyncio.create_task(dispatch(url, settings, state, biz_type=biz_type))
-        tasks.append(task)
-
-    results = await asyncio.gather(*tasks)
-    print(f"total requests", len(results))
-
-
-async def run_scraper(state, page_limit, biz_type=None):
-    state = state.lower().replace(' ', '-')
-    settings = {
-        "max_tcp_connections": 1,
-        "proxies": [
-            "http://localhost:8765",
-        ],
-        "rate_per_host": {
-            'www.bizbuysell.com': {
-                # Prevent bot denials
-                "limit": AsyncLimiter(10, 60), # 10 reqs/min
-            },
-        }
-    }
-
-    start_urls = []
-    start, end = 1, page_limit
-    for i in range(start, end):
-        url = f"https://www.bizbuysell.com/{state}-businesses-for-sale/{i}"
-        start_urls.append(url)
-
-    asyncio.run(main(start_urls, settings, state, biz_type=biz_type))
+            return business

@@ -22,7 +22,7 @@ const Toolbar = props => {
                 h='100vw'
                 position='relative'>
                 <ChakraLink 
-                    w='250px'
+                    w='13rem'
                     as={ReactRouterLink} 
                     to='/businesses'
                     textAlign='left'
@@ -31,7 +31,7 @@ const Toolbar = props => {
                     Main Feed
                 </ChakraLink>
                 <ChakraLink 
-                    w='250px'
+                    w='13rem'
                     as={ReactRouterLink} 
                     to='/new-business-diligence'
                     textAlign='left'
@@ -39,7 +39,7 @@ const Toolbar = props => {
                     Create Business Diligence
                 </ChakraLink>
                 <ChakraLink 
-                    w='250px'
+                    w='13rem'
                     textAlign='left'
                     as={ReactRouterLink} 
                     to='/new-business'
@@ -47,7 +47,7 @@ const Toolbar = props => {
                     Create a business
                 </ChakraLink>
                 <ChakraLink
-                    w='250px'
+                    w='13rem'
                     textAlign='left'
                     as={ReactRouterLink} 
                     to='/business-diligence'
@@ -55,7 +55,7 @@ const Toolbar = props => {
                     Business Diligence Comparison
                 </ChakraLink>
                 <ChakraLink
-                    w='250px'
+                    w='13rem'
                     textAlign='left'
                     as={ReactRouterLink} 
                     to='/business-diligence'

@@ -39,7 +39,10 @@ def get_all_businesses() -> list:
     businesses = [biz for biz in db.session.query(Business).all()]
     for biz in businesses:
         metric_data = _get_biz_metrics(biz.uid)
-        data.append({**biz.serialize, **metric_data})
+        if metric_data:
+            data.append({**biz.serialize, **metric_data})
+        else:
+            data.append({**biz.serialize, **Metrics.empty_data()})
     return data
 
 
