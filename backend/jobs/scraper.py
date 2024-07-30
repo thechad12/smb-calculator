@@ -1,6 +1,5 @@
 import aiohttp
 from bs4 import BeautifulSoup
-import asyncio
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from database.models.business import Business
