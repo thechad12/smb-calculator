@@ -6,8 +6,28 @@ from database.models.deal_box import DealBox
 from database.models.metrics import Metrics
 from main import db
 from routes.utils import validate_required_fields
+import asyncio
+from jobs.scraper import scrape_business_info
 
 actions = Blueprint('actions', __name__)
+
+@actions.route('/scrape', methods=['POST'])
+def scrape():
+    data = request.json
+    url = data.get('url')
+    
+    if not url:
+        return jsonify({"error": "URL is required"}), 400
+    
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    try:
+        business = loop.run_until_complete(scrape_business_info(url))
+        return jsonify({"message": f"Added business: {business.name}"}), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": "An error occurred during scraping"}), 500
 
 @actions.route('/update_businesses', methods=['POST'])
 def update_businesses():
