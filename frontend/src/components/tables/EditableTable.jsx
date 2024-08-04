@@ -21,6 +21,8 @@ const EditableTable = (props) => {
     const saveEndpoint = props.saveEndpoint;
     const saveText = props.saveText || 'Save Data';
     const updateText = props.updateText || 'Update Data';
+    const deleteText = props.deleteText || 'Delete Selected';
+    const deleteEndpoint = props.deleteEndpoint;
     const updateEndpoint = props.updateEndpoint;
     const width = props.width || '100%';
     const styleProps = props.styleProps || {};
@@ -50,6 +52,13 @@ const EditableTable = (props) => {
         return res;
     });
 
+    const getSelectedIds = useCallback(() => {
+        const selectedIds = [];
+        const data = gridRef.current.api.getSelectedRows();
+        data.forEach(row => selectedIds.push(row.uid));
+        return selectedIds;
+    })
+
     return (
         <>
             <div className='table-container'>
@@ -58,6 +67,9 @@ const EditableTable = (props) => {
                 </Button>
                 <Button variant='ghost' onClick={() => updateEndpoint(getRowData())}>
                     {updateText}
+                </Button>
+                <Button variant='ghost' color='#ff7081' onClick={() => deleteEndpoint(getSelectedIds())}>
+                    {deleteText}
                 </Button>
                 <Button variant='ghost' onClick={() => addBlankRow(data.length || 0)}>
                     Add New Row
@@ -70,6 +82,8 @@ const EditableTable = (props) => {
                     rowData={data}
                     columnDefs={columns}
                     defaultColDef={defaultColDef}
+                    rowSelection='multiple'
+                    rowMultiSelectWithClick
                     pagination
                 />
                 </div>

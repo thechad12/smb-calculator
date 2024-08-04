@@ -52,6 +52,19 @@ function NewBusiness() {
     setData(blankRowFromEmptyData(columns, data));
   }
 
+  const deleteBusiness = async (data) => {
+    const response = await fetch(`${DATA_BASE_URL}/delete_business`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    const responseData = await response.json();
+    return responseData;
+  }
+
   const createBusiness = async (data) => {
     const response = await fetch(`${DATA_BASE_URL}/add_business`, {
       method: 'POST',
@@ -92,6 +105,13 @@ function NewBusiness() {
     }
   });
 
+  const { mutate: deleteBusinessMutation, isLoading: isDeletingBusiness } = useMutation(deleteBusiness, {
+    onSuccess: () => {
+      setSuccess(true);
+      fetchBusinesses();
+    }
+  });
+
   return (
     <>
       <Toolbar/>
@@ -116,6 +136,7 @@ function NewBusiness() {
         columns={columns}
         saveEndpoint={createBusinessMutation}
         updateEndpoint={updateBusinessMutation}
+        deleteEndpoint={deleteBusinessMutation}
         width="55rem"
         data={data} />
       </>

@@ -5,11 +5,19 @@ from database.models.business import Business
 from database.models.deal_box import DealBox
 from database.models.metrics import Metrics
 from main import db
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import delete
 from routes.utils import validate_required_fields
 import asyncio
 from jobs.scraper import scrape_business_info
+from config import Config
 
 actions = Blueprint('actions', __name__)
+
+DATABASE_URL = Config.SQLALCHEMY_DATABASE_URI
+engine = create_async_engine(DATABASE_URL, echo=True)
+AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 @actions.route('/scrape', methods=['POST'])
 def scrape():
@@ -28,7 +36,30 @@ def scrape():
         return jsonify({"error": str(e)}), 400
     except Exception as e:
         return jsonify({"error": "An error occurred during scraping"}), 500
+    
 
+@actions.route('/delete_businesses', methods=['POST'])
+async def delete_businesses():
+    data = request.json
+    business_uids = data.get('business_uids')
+    
+    if not business_uids or not isinstance(business_uids, list):
+        return jsonify({"error": "A list of business UIDs is required"}), 400
+
+    async with AsyncSessionLocal() as session:
+        async with session.begin():
+            try:
+                # Delete businesses with the given UIDs
+                await session.execute(
+                    delete(Business).where(Business.uid.in_(business_uids))
+                )
+                await session.commit()
+                return jsonify({"message": "Businesses successfully deleted"}), 200
+            except Exception as e:
+                await session.rollback()
+                return jsonify({"error": str(e)}), 500
+
+    
 @actions.route('/update_businesses', methods=['POST'])
 def update_businesses():
     data = request.get_json()
