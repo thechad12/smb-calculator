@@ -7,3 +7,5 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     CORS_HEADERS = 'Content-Type'
     BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_BROKER_URL = 'redis://redis-business:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://redis-business:6379/0'

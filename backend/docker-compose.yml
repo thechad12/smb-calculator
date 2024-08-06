@@ -16,10 +16,14 @@ services:
     depends_on:
       - database
 
-  jobs:
-    build: .
-    container_name: worker-1
-    hostname: worker-1
+    worker:
+      build: .
+      command: celery -A main.celery worker --loglevel=info
+      container_name: worker-1
+      hostname: worker-1
+      depends_on:
+        - redis
+        - backend
   
   redis:
     container_name: redis-business
