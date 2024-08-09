@@ -1,12 +1,8 @@
-import json
-import calculations.calc as calc
 from flask import Blueprint, request, jsonify
 from database.models.business import Business
 from database.models.deal_box import DealBox
 from database.models.metrics import Metrics
 from main import db
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy import delete
 from routes.utils import validate_required_fields
 from main import db, celery
@@ -16,8 +12,6 @@ from config import Config
 actions = Blueprint('actions', __name__)
 
 DATABASE_URL = Config.SQLALCHEMY_DATABASE_URI
-engine = create_async_engine(DATABASE_URL, echo=True)
-AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 @actions.route('/scrape', methods=['POST'])
 def scrape():

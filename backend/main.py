@@ -4,33 +4,11 @@ from flask_migrate import Migrate
 from flask_cors import CORS
 from celery import Celery
 
-
 app = Flask(__name__)
 app.config.from_object("config.Config")
 cors = CORS(app)
 db = SQLAlchemy(app)
-
-
-from database.models.business import Business
-from database.models.metrics import Metrics
-from database.models.deal_box import DealBox
-from database.models.portfolio import Portfolio
-from database.models.portfolio_business import PortfolioBusiness
-
-target_metadata = [
-    Business, 
-    Metrics, 
-    DealBox, 
-    Portfolio, 
-    PortfolioBusiness
-]
 migrate = Migrate(app, db)
-
-from routes.data import bp
-from routes.actions import actions
-
-app.register_blueprint(bp)
-app.register_blueprint(actions)
 
 def make_celery(app):
     celery = Celery(
@@ -46,3 +24,28 @@ def make_celery(app):
     return celery
 
 celery = make_celery(app)
+
+# Import models so that Flask-Migrate can pick them up
+from database.models.business import Business
+from database.models.metrics import Metrics
+from database.models.deal_box import DealBox
+from database.models.portfolio import Portfolio
+from database.models.portfolio_business import PortfolioBusiness
+
+target_metadata = [
+    Business, 
+    Metrics, 
+    DealBox, 
+    Portfolio, 
+    PortfolioBusiness
+]
+
+# Register blueprints after app and celery have been initialized
+from routes.data import bp
+from routes.actions import actions
+
+app.register_blueprint(bp)
+app.register_blueprint(actions)
+
+if __name__ == "__main__":
+    app.run()

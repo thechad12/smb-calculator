@@ -15,15 +15,23 @@ services:
     tty: true
     depends_on:
       - database
+  
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
-    worker:
-      build: .
-      command: celery -A main.celery worker --loglevel=info
-      container_name: worker-1
-      hostname: worker-1
-      depends_on:
-        - redis
-        - backend
+  jobs:
+    build: .
+    working_dir: /app
+    command: celery -A main.celery worker --loglevel=info
+    container_name: worker-1
+    hostname: worker-1
+    depends_on:
+      - redis
+      - backend
+      - rabbitmq
   
   redis:
     container_name: redis-business

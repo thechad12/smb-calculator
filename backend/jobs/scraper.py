@@ -1,15 +1,18 @@
-import aiohttp
+import requests
 from bs4 import BeautifulSoup
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from celery import shared_task
 from sqlalchemy.orm import sessionmaker
 from database.models.business import Business
+from database.models.metrics import Metrics
 from config import Config
+from sqlalchemy import create_engine
 
+# Database setup
 DATABASE_URL = Config.SQLALCHEMY_DATABASE_URI
-engine = create_async_engine(DATABASE_URL, echo=True)
-AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+engine = create_engine(DATABASE_URL, echo=True)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-async def parse_bizbuysell(soup):
+def parse_bizbuysell(soup):
     data = {}
     data['cashflow'] = soup.select_one('.cashflow-selector').text.strip()
     data['sde'] = soup.select_one('.sde-selector').text.strip()
@@ -19,7 +22,7 @@ async def parse_bizbuysell(soup):
     data['location'] = soup.select_one('.location-selector').text.strip()
     return data
 
-async def parse_flippa(soup):
+def parse_flippa(soup):
     data = {}
     data['cashflow'] = soup.select_one('.cashflow-selector').text.strip()
     data['sde'] = soup.select_one('.sde-selector').text.strip()
@@ -29,7 +32,7 @@ async def parse_flippa(soup):
     data['location'] = soup.select_one('.location-selector').text.strip()
     return data
 
-async def parse_apollo(soup):
+def parse_apollo(soup):
     data = {}
     data['cashflow'] = soup.select_one('.cashflow-selector').text.strip()
     data['sde'] = soup.select_one('.sde-selector').text.strip()
@@ -39,33 +42,52 @@ async def parse_apollo(soup):
     data['location'] = soup.select_one('.location-selector').text.strip()
     return data
 
-async def scrape_business_info(url):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            response_text = await response.text()
-            soup = BeautifulSoup(response_text, 'html.parser')
+@shared_task
+def scrape_business_info(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
 
-            if 'bizbuysell.com' in url:
-                data = await parse_bizbuysell(soup)
-            elif 'flippa.com' in url:
-                data = await parse_flippa(soup)
-            elif 'apollo.io' in url:
-                data = await parse_apollo(soup)
-            else:
-                raise ValueError("Unsupported site")
+    if 'bizbuysell.com' in url:
+        data = parse_bizbuysell(soup)
+    elif 'flippa.com' in url:
+        data = parse_flippa(soup)
+    elif 'apollo.io' in url:
+        data = parse_apollo(soup)
+    else:
+        raise ValueError("Unsupported site")
 
-            async with AsyncSessionLocal() as session:
-                async with session.begin():
-                    business = Business(
-                        name='Business Name',
-                        cashflow=data['cashflow'],
-                        sde=data['sde'],
-                        revenue=data['revenue'],
-                        profit_margin=data['profit_margin'],
-                        multiple=data['multiple'],
-                        location=data['location']
-                    )
-                    session.add(business)
-                await session.commit()
+    db_session = SessionLocal()
+    try:
+        business = Business(
+            name='Business Name',
+            location=data.get('location', ''),
+            description='',
+            biz_type=''
+        )
+        db_session.add(business)
+        db_session.flush()
 
-            return business
+        metrics = Metrics(
+            business_uid=business.uid,
+            cashflow=data.get('cashflow', 0.0),
+            ask_price=0.0,
+            gross_revenue=data.get('revenue', 0.0),
+            ebitda=0.0,
+            valuation=0.0,
+            revenue=data.get('revenue', 0.0),
+            sector='',
+            geography='',
+            scale=1,
+            advantages=[],
+            investor=False,
+            multiple=data.get('multiple', 0.0)
+        )
+        db_session.add(metrics)
+        db_session.commit()
+
+        return business.serialize
+    except Exception as e:
+        db_session.rollback()
+        raise e
+    finally:
+        db_session.close()
